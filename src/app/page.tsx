@@ -1,5 +1,5 @@
+import Hero from '@/components/HomePage/Hero';
+
 export default function Home() {
-  return (
-    <h1>Hello from home</h1>
-  );
+  return <Hero />;
 }
