@@ -19,8 +19,10 @@ const config: Config = {
           light: '#ebfce1',
           darkLight: '#d0e5c3',
           regular: '#8ec571',
+          darkRegular: '#6fb14c',
           lightMedium: '#488577',
           medium: '#37655b',
+          darkMedium: '#285047',
           dark: '#001c1e',
           extraDark: '#001314',
         },
@@ -41,10 +43,21 @@ const config: Config = {
             transform: 'translateY(0)',
             opacity: '100%'
           },
+        },
+        pointUpwards: {
+          '0%': {
+            transform: 'translateY(0rem)',
+            opacity: '100%',
+          },
+          '100%': {
+            transform: 'translateY(-1rem)',
+            opacity: '0%',
+          }
         }
       },
       animation: {
         openDropdownList: 'openDownwards 0.2s ease-out 1 forwards',
+        goUpwards: 'pointUpwards 1s ease-in-out infinite',
       }
     },
   },

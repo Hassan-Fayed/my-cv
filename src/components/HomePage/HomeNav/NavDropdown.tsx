@@ -3,7 +3,6 @@
 import { useState } from "react";
 import classNames from "classnames";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { IconContext } from "react-icons";
 
 import NavDropdownList from "./NavDropdownList";
 
@@ -49,15 +48,12 @@ export default function NavDropdown({ title, dropdownList }: NavLinkProps) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
     >
-        <IconContext.Provider value={{
-            size: "1.2rem",
-            className: "relative group-hover:translate-y-0.5 transition-transform"
-        }}>
-            <p className={pClassName}>
-                <span className="pr-1">{title}</span>
+        <p className={pClassName}>
+            <span className="pr-1">{title}</span>
+            <span className="group-hover:translate-y-0.5 transition-transform text-xl">
                 <IoMdArrowDropdown />
-            </p>
-        </IconContext.Provider>
+            </span>
+        </p>
         {isOpen && <NavDropdownList listWidth="w-[7.3rem]" setIsOpen={setIsOpen} dropdownList={dropdownList} />}
     </div>;
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import classNames from "classnames";
 
 interface IconLinkProps {
+    isLinkingOutside: boolean
     children: JSX.Element;
     color: string;
     hoverColor: string;
@@ -12,6 +13,7 @@ interface IconLinkProps {
 }
 
 export default function IconLink({
+    isLinkingOutside,
     children,
     color,
     hoverColor,
@@ -28,17 +30,18 @@ export default function IconLink({
         'items-center',
         hoverBackgroundColor,
         hoverContainerDimensions,
-        'tratransition-colors'
+        'tratransition-colors',
     );
 
     const LinkClassName = classNames(
         color,
-        fontSize,
         hoverColor,
-        'transition-colors'
+        fontSize,
+        'transition-colors',
     );
 
     return <div className={divClassName}>
-        <Link target="_blank" className={LinkClassName} href={to}>{children}</Link>
+        {isLinkingOutside && <Link target="_blank" className={LinkClassName} href={to}>{children}</Link>}
+        {!isLinkingOutside && <Link className={LinkClassName} href={to}>{children}</Link>}
     </div>;
 }

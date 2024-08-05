@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import type { Dispatch } from 'react';
 import type { SetStateAction } from 'react';
