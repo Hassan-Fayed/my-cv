@@ -1,3 +1,7 @@
+import AVLTreeNav from '@/components/AVLTreePage/AVLTreeNav/AVLTreeNav';
+
 export default function AvlTreePage() {
-    return <h1>AVL page</h1>;
+    return <div className="h-svh w-full bg-brand-light">
+        <AVLTreeNav />
+    </div>;
 }

@@ -1,0 +1,5 @@
+label:has(+ #new-task:focus) {
+    transform: translate(0, 0);
+    color: #488577;
+    font-weight: 500;
+}

@@ -19,9 +19,9 @@ export default function Footer() {
                 text-3xl
             `}>{'I appreciate your visit (^_^)'}</div>
             <Link href="/contact-info" className="
-                text-brand-darkLight
+                text-[#529989]
                 text-3xl
-                hover:text-brand-extraLight
+                hover:text-brand-light
                 transition-colors
             ">Contact me</Link>
             <div className="absolute top-7 right-7 animate-goUpwards hover:animate-none">

@@ -1,3 +1,7 @@
+import GeneralNav from "@/components/GeneralNav";
+
 export default function PokeFightPage() {
-    return <h1>Pokefight page</h1>;
+    return <div className="w-full h-svh bg-brand-light">
+        <GeneralNav title="PokéFight" />
+    </div>;
 }

@@ -49,8 +49,8 @@ export default function NavBar() {
                         title="Projects"
                         dropdownList={[
                             { title: 'AVL Tree', link: paths.avlTree() },
-                            { title: 'Counter', link: paths.counter() },
-                            { title: 'PokeFight', link: paths.pokeFight() },
+                            { title: 'Timer', link: paths.counter() },
+                            { title: 'PokéFight', link: paths.pokeFight() },
                             { title: 'To do', link: paths.toDo() },
                         ]}
                     />

@@ -6,7 +6,7 @@ const paths = {
         return '/projects/avl-tree';
     },
     counter() {
-        return '/projects/counter';
+        return '/projects/timer';
     },
     toDo() {
         return '/projects/to-do';
