@@ -10,7 +10,7 @@ interface GeneralNavProps {
 }
 
 export default function GeneralNav({ title }: GeneralNavProps) {
-    return <nav className="h-[4.7rem] w-full relative">
+    return <nav className="h-[4.7rem] w-full sticky top-[0] left-[0]">
         <h1 className={`
             w-full 
             h-full
