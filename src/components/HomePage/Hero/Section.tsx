@@ -3,20 +3,21 @@ import { Press_Start_2P } from "next/font/google";
 import classNames from "classnames";
 
 interface Content {
-    title: string;
     subTitle: string;
+    details: string;
     paragraph: string;
 }
 
 interface SectionProps {
     isOpaqueBG: boolean;
-    title: string;
+    title: JSX.Element;
     content: Content[];
+    paddingY: string;
 }
 
 const pressStart2p = Press_Start_2P({ weight: '400', subsets: ['latin'] });
 
-export default function Section({ title, content, isOpaqueBG }: SectionProps) {
+export default function Section({ title, content, isOpaqueBG, paddingY }: SectionProps) {
     const h4ClassName = classNames(
         'font-bold text-[1.2rem] mb-4',
         {
@@ -26,17 +27,18 @@ export default function Section({ title, content, isOpaqueBG }: SectionProps) {
     );
 
     const renderedContent = content.map((el) => {
-        return <div key={el.title}>
-            <h3 className="font-bold text-[2.2rem] leading-tight">{el.title}</h3>
+        return <div key={el.subTitle}>
+            <h3 className="font-bold text-[2.2rem] leading-tight">{el.subTitle}</h3>
             <h4 className={h4ClassName}>
-                {el.subTitle}
+                {el.details}
             </h4>
             {!!el.paragraph && <p className="text-[1.2rem]">{el.paragraph}</p>}
         </div>;
     });
 
     const sectionClassName = classNames(
-        'w-full h-svh flex justify-center items-center text-brand-extraDark',
+        'w-full min-h-svh flex justify-center text-brand-extraDark',
+        paddingY,
         {
             'text-brand-dark bg-brand-light': !isOpaqueBG,
             'text-brand-extraDark bg-brand-darkLight': isOpaqueBG,
@@ -54,12 +56,10 @@ export default function Section({ title, content, isOpaqueBG }: SectionProps) {
     return <section aria-labelledby="education-title" className={sectionClassName}>
         <div className="
             max-w-container-width 
-            flex 
-            gap-y-12 
+            flex
             flex-col 
-            justify-center 
-            relative 
-            top-[1.15rem]
+            gap-y-12  
+            relative
         ">
             <h2 id="education-title" className={`
                     ${pressStart2p.className}

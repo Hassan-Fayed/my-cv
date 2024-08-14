@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, Dispatch, SetStateAction, FormEvent } from 'react';
 
 import { IoMdArrowDropleft } from "react-icons/io";
 import { Press_Start_2P } from 'next/font/google';
@@ -11,17 +10,22 @@ import Switch from "./Switch";
 
 const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
-export default function AVLTreeNav() {
-    const [term, setTerm] = useState('');
-    const [isDelete, setIsDelete] = useState(false);
+interface AVLTreeProps {
+    term: string;
+    setTerm: Dispatch<SetStateAction<string>>;
+    isDelete: boolean;
+    setIsDelete: Dispatch<SetStateAction<boolean>>;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
 
+export default function AVLTreeNav({ term, setTerm, isDelete, setIsDelete, onSubmit }: AVLTreeProps) {
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);
     }
 
     const inputPlaceHolder = isDelete ? 'Delete a number' : 'Add a number';
 
-    return <nav className="fixed top-[0] left-[0] h-[4.7rem] w-full">
+    return <nav className="sticky top-[0] left-[0] h-[4.7rem] w-full z-10">
         <h1 className={`
             w-full 
             h-full
@@ -54,16 +58,25 @@ export default function AVLTreeNav() {
                 >
                     <IoMdArrowDropleft className="relative right-0.5" />
                 </IconLink>
-                <div className="flex gap-5">
+                <form onSubmit={onSubmit} className="flex gap-5">
                     <input
+                        max={99}
+                        min={-9}
                         value={term}
                         onChange={handleTermChange}
                         type="number"
                         placeholder={inputPlaceHolder}
-                        className="pl-2"
+                        className="
+                            w-[11.308rem]
+                            pl-2 
+                            focus:outline-none 
+                            focus:outline-brand-lightMedium
+                            focus:outline-offset-[-1px]
+                            focus:rounded-none
+                        "
                     />
                     <Switch value={isDelete} setValue={setIsDelete} />
-                </div>
+                </form>
             </div>
         </div>
     </nav>;
