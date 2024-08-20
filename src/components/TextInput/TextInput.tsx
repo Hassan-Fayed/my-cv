@@ -12,17 +12,25 @@ interface TextInputType {
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;
     labelText: string;
     inputFieldWidth: string;
+    inputUniqueId: string;
 }
 
-export default function TextInput({ value, onChange, onSubmit, labelText, inputFieldWidth }: TextInputType) {
+export default function TextInput({
+    value,
+    onChange,
+    onSubmit,
+    labelText,
+    inputFieldWidth,
+    inputUniqueId,
+}: TextInputType) {
     const labelClassName = classNames('transition-transform text-2xl', {
         'translate-x-[0.55rem] translate-y-[2.05rem] text-brand-regular': value.length <= 0,
         'translate-x-[0] translate-y-[0] text-brand-lightMedium font-medium': value.length > 0,
     })
 
     return <form onSubmit={onSubmit} className="flex items-start flex-col relative">
-        <label className={labelClassName} htmlFor="new-task">{labelText}</label>
-        <input id="new-task" value={value} onChange={onChange} type="text" className={`
+        <label className={labelClassName} htmlFor={inputUniqueId}>{labelText}</label>
+        <input id={inputUniqueId} value={value} onChange={onChange} type="text" className={`
             border-brand-regular
             border
             text-2xl

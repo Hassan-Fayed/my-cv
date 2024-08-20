@@ -4,7 +4,7 @@ import IconLink from '../../IconLink';
 import { IoMdArrowDropup } from "react-icons/io";
 
 export default function Footer() {
-    return <footer className="h-[25.4rem] bg-brand-dark flex justify-center relative">
+    return <footer className="h-[61.805svh] bg-brand-dark flex justify-center relative">
         <div className="
             max-w-container-width 
             w-full 

@@ -4,8 +4,7 @@ import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 
 import GeneralNav from "@/components/GeneralNav";
-import TextInput from '@/components/ToDoPage/TextInput/TextInput';
-import Button from '@/components/Button';
+import TextInput from '@/components/TextInput/TextInput';
 import TaskShow from '@/components/ToDoPage/TaskShow';
 
 import { Press_Start_2P } from 'next/font/google';
@@ -79,11 +78,12 @@ export default function ToDoPage() {
                     value={term}
                     onChange={handleTermChange}
                     inputFieldWidth="max-w-[61.805%] w-full"
+                    inputUniqueId="task-input"
                 />
                 <h2 className={`
                     ${pressStart2p.className}
                     text-brand-dark
-                    text-5xl
+                    text-[1.5rem]
                     mt-16
                     mb-10
                     relative
