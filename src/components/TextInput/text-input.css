@@ -1,4 +1,4 @@
-label:has(+ #new-task:focus) {
+label:has(+ input[type="text"]:focus) {
     transform: translate(0, 0);
     color: #488577;
     font-weight: 500;

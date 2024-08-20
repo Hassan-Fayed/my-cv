@@ -10,6 +10,7 @@ interface ButtonProps {
     fontSize?: string;
     onClick: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
     disabled?: boolean;
+    className?: string;
 }
 
 function Button({
@@ -20,6 +21,7 @@ function Button({
     fontSize = 'text-base',
     onClick,
     disabled = false,
+    className = "",
 }: ButtonProps) {
     const buttonClassName = classNames(
         'align-top',
@@ -36,7 +38,7 @@ function Button({
         },
     );
 
-    return <div className={`relative w-max h-max inline-block ${fontSize}`}>
+    return <div className={`relative w-max h-max inline-block ${fontSize} ${className}`}>
         <div className={`${parentBackgroundColor} w-[0.3em] h-[0.3em] absolute left-[0] top-[0]`}></div>
         <div className={`${parentBackgroundColor} w-[0.3em] h-[0.3em] absolute left-[0] bottom-[0]`}></div>
         <div className={`${parentBackgroundColor} w-[0.3em] h-[0.3em] absolute right-[0] top-[0]`}></div>
