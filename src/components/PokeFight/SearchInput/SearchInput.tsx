@@ -40,7 +40,7 @@ export default function SearchInput({
         if (pokemon && pokemon.currHp <= 0)
             setPokemon(null);
 
-    }, [term, pokemon]);
+    }, [term, pokemon, setPokemon]);
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);

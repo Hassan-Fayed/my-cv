@@ -5,7 +5,7 @@ const paths = {
     avlTree() {
         return '/projects/avl-tree';
     },
-    counter() {
+    timer() {
         return '/projects/timer';
     },
     toDo() {
@@ -13,9 +13,6 @@ const paths = {
     },
     pokeFight() {
         return '/projects/poke-fight';
-    },
-    about() {
-        return '/about';
     },
     contactInfo() {
         return '/contact-info'

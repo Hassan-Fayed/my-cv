@@ -28,9 +28,10 @@ export default function IconLink({
         'flex',
         'justify-center',
         'items-center',
-        hoverBackgroundColor,
-        hoverContainerDimensions,
-        'tratransition-colors',
+        'tratransition-colors', {
+        [hoverBackgroundColor]: hoverBackgroundColor,
+        [hoverContainerDimensions]: hoverContainerDimensions,
+    }
     );
 
     const LinkClassName = classNames(

@@ -1,20 +1,37 @@
 'use client';
 
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { Press_Start_2P } from 'next/font/google';
 import { FaGithub } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaBehance } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa";
 
 import IconLink from '@/components/IconLink';
 import NavLink from './NavLink';
 import NavDropdown from './NavDropdown';
-
+import HamburgerList from './HamburgerList';
 import paths from '@/utils/paths';
+import { useModalContext } from '@/context/modalContext';
 
 const pressStart2p = Press_Start_2P({ weight: '400', subsets: ["latin"] });
 
-export default function NavBar() {
+export default function HomeNavBar() {
+    const { setIsShowModal } = useModalContext();
+    const [isShowHamburgerList, setIsShowHamburgerList] = useState(false);
+    const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
+
+    const handleAboutClick = () => {
+        setIsShowModal(true);
+    };
+
+    const handleHamburgerClick = () => {
+        setIsShowHamburgerList((currVal) => {
+            return !currVal;
+        });
+    };
+
     return <nav id="top" className="
         w-full 
         h-[3.7rem]
@@ -26,8 +43,8 @@ export default function NavBar() {
         left-[0]
         z-[10]
     ">
-        <div className="w-full max-w-container-width flex h-fill justify-between">
-            <ul className="flex gap-16">
+        <div className="w-full max-w-container-width flex h-fill justify-between mx-5 relative z-10">
+            <ul className="flex gap-16 max-900px:gap-12">
                 <li className={`
                     ${pressStart2p.className} 
                     flex self-stretch 
@@ -44,26 +61,26 @@ export default function NavBar() {
                         left-[0.2rem]
                     ">HF</Link>
                 </li>
-                <li className="flex relative">
+                <li className="flex relative tablet:hidden">
                     <NavDropdown
                         title="Projects"
                         dropdownList={[
                             { title: 'AVL Tree', link: paths.avlTree() },
-                            { title: 'Timer', link: paths.counter() },
+                            { title: 'Timer', link: paths.timer() },
                             { title: 'PokéFight', link: paths.pokeFight() },
                             { title: 'To do', link: paths.toDo() },
                         ]}
                     />
                 </li>
-                <li className="flex relative">
-                    <NavLink to={paths.about()} >About</NavLink>
+                <li onClick={handleAboutClick} className="flex relative tablet:hidden">
+                    <NavLink to="" >About</NavLink>
                 </li>
-                <li className="flex relative">
+                <li className="flex relative tablet:hidden">
                     <NavLink to={paths.contactInfo()} >Contact Info</NavLink>
                 </li>
             </ul>
             <ul className="flex items-center gap-4">
-                <li>
+                <li className="tablet:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -76,7 +93,7 @@ export default function NavBar() {
                         <FaGithub />
                     </IconLink>
                 </li>
-                <li>
+                <li className="tablet:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -89,7 +106,7 @@ export default function NavBar() {
                         <FaLinkedinIn />
                     </IconLink>
                 </li>
-                <li>
+                <li className="tablet:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -102,7 +119,22 @@ export default function NavBar() {
                         <FaBehance className="relative top-[0.0375rem] left-[0.0375rem]" />
                     </IconLink>
                 </li>
+                <li className="hidden tablet:list-item">
+                    <button
+                        ref={hamburgerButtonRef}
+                        onClick={handleHamburgerClick}
+                        className="
+                            flex justify-center items-center
+                            w-[2.9rem] h-[2.9rem] text-[1.7rem] text-brand-lightMedium rounded-full
+                            hover:text-brand-extraDark hover:bg-brand-darkLight
+                        "
+                    >
+                        <FaBars className="relative top-[0.0375rem] left-[0.0375rem]" />
+                    </button>
+                </li>
             </ul>
         </div>
+
+        {isShowHamburgerList && <HamburgerList setIsShowHamburgerList={setIsShowHamburgerList} hamburgerButtonRef={hamburgerButtonRef} />}
     </nav>;
 }

@@ -27,7 +27,7 @@ export default function List({ image, name, handleListClick, setFoundPokemon }: 
         document.addEventListener('click', handler, true);
 
         return document.removeEventListener('click', handler);
-    }, []);
+    }, [setFoundPokemon]);
 
 
     return <div ref={listRef} onClick={handleListClick} className="
