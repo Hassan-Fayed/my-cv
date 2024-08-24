@@ -1,11 +1,14 @@
 import Image from 'next/image';
 
 import Hero from '@/components/HomePage/Hero/Hero';
-import Section from '@/components/HomePage/Hero/Section';
+import Section from '@/components/HomePage/Section';
 import Footer from "@/components/HomePage/Footer/Footer";
+import Modal from '@/components/Modal';
+import { ModalProvider } from '@/context/modalContext';
 
 export default function Home() {
-  return <>
+  return <ModalProvider>
+    <Modal />
     <Hero />
     <Section
       isOpaqueBG={false}
@@ -57,5 +60,6 @@ export default function Home() {
       />
     </div>
     <Footer />
-  </>;
+    <div className="modal-container"></div>
+  </ModalProvider>;
 }

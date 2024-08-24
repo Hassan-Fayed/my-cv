@@ -64,6 +64,12 @@ const config: Config = {
         goUpwards: 'pointUpwards 1s ease-in-out infinite',
       }
     },
+    screens: {
+      'desktop-small': { 'max': '1024px' },
+      'max-900px': { 'max': '900px' },
+      'tablet': { 'max': '768px' },
+      'mobile': { 'max': '480px' },
+    },
   },
   plugins: [],
 };
