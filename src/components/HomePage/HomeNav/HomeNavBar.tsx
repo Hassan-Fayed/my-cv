@@ -33,8 +33,7 @@ export default function HomeNavBar() {
     };
 
     return <nav id="top" className="
-        w-full 
-        h-[3.7rem]
+        min-h-[3.7rem]
         flex 
         justify-center 
         bg-brand-light 
@@ -42,9 +41,11 @@ export default function HomeNavBar() {
         top-[0]
         left-[0]
         z-[10]
+        px-11
+        screen-2xs:px-6
     ">
-        <div className="w-full max-w-container-width flex h-fill justify-between mx-5 relative z-10">
-            <ul className="flex gap-16 max-900px:gap-12">
+        <div className="w-full max-w-container-width flex h-fill justify-between relative z-10">
+            <ul className="flex gap-16 screen-md:gap-12">
                 <li className={`
                     ${pressStart2p.className} 
                     flex self-stretch 
@@ -61,7 +62,7 @@ export default function HomeNavBar() {
                         left-[0.2rem]
                     ">HF</Link>
                 </li>
-                <li className="flex relative tablet:hidden">
+                <li className="flex relative screen-s:hidden">
                     <NavDropdown
                         title="Projects"
                         dropdownList={[
@@ -72,15 +73,15 @@ export default function HomeNavBar() {
                         ]}
                     />
                 </li>
-                <li onClick={handleAboutClick} className="flex relative tablet:hidden">
+                <li onClick={handleAboutClick} className="flex relative screen-s:hidden">
                     <NavLink to="" >About</NavLink>
                 </li>
-                <li className="flex relative tablet:hidden">
+                <li className="flex relative screen-s:hidden">
                     <NavLink to={paths.contactInfo()} >Contact Info</NavLink>
                 </li>
             </ul>
             <ul className="flex items-center gap-4">
-                <li className="tablet:hidden">
+                <li className="screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -93,7 +94,7 @@ export default function HomeNavBar() {
                         <FaGithub />
                     </IconLink>
                 </li>
-                <li className="tablet:hidden">
+                <li className="screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -106,7 +107,7 @@ export default function HomeNavBar() {
                         <FaLinkedinIn />
                     </IconLink>
                 </li>
-                <li className="tablet:hidden">
+                <li className="screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -119,7 +120,7 @@ export default function HomeNavBar() {
                         <FaBehance className="relative top-[0.0375rem] left-[0.0375rem]" />
                     </IconLink>
                 </li>
-                <li className="hidden tablet:list-item">
+                <li className="hidden screen-s:list-item">
                     <button
                         ref={hamburgerButtonRef}
                         onClick={handleHamburgerClick}

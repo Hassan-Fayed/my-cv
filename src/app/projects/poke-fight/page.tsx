@@ -9,36 +9,47 @@ const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
 export default function PokeFightPage() {
     return <PokemonProvider>
-        <div className="w-full h-svh bg-brand-light">
-            <GeneralNav title="PokéFight" />
-            <main className="
-            h-general-container-height 
-            max-w-container-width 
-            ml-auto
-            mr-auto
-            flex
-            overflow-y-clip
-            pt-[3rem]
-            box-border
+        <GeneralNav title="PokéFight" />
+        <main className="
+            min-h-general-container-height bg-brand-light 
+            px-[2.168rem]
+            screen-xs:px-[1rem]
         ">
-                <div className="w-[45%] flex justify-start">
-                    <PokeShow position="left" />
-                </div>
+            <div className="
+                max-w-container-width 
+                pt-[3rem]
+                mx-auto
+                flex justify-between
+                text-[1rem]
+                screen-md:text-[0.9rem]
+                screen-s:text-[0.8rem]
+                screen-s:text-[0.7rem]
+                screen-xs:text-[0.6rem]
+            ">
+                <PokeShow position="left" className="
+                    w-[30%]
+                    screen-s:w-[35%]
+                    screen-ss:w-[40%]
+                    screen-4xs:w-[45%]
+                " />
                 <div className={`
                     ${pressStart2p.className}  
-                    text-3xl 
+                    text-[max(1.875em,1rem)]
                     text-brand-medium
                     flex
                     justify-center
                     items-center
                     w-[10%]
                 `}>
-                    <span className="relative top-[2.5rem]">VS</span>
+                    <span className="relative top-[1.75em] screen-2xs:hidden">VS</span>
                 </div>
-                <div className="w-[45%] flex justify-end">
-                    <PokeShow position="right" />
-                </div>
-            </main>
-        </div>
+                <PokeShow position="right" className="
+                    w-[30%]
+                    screen-s:w-[35%]
+                    screen-ss:w-[40%]
+                    screen-4xs:w-[45%]
+                " />
+            </div>
+        </main>
     </PokemonProvider>;
 }

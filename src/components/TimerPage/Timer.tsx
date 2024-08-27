@@ -5,13 +5,17 @@ import { useState, useRef } from "react";
 import TimerUI from "./TimerUI";
 import TimerCanvasShow from "./TimerCanvasShow";
 
-export default function Timer() {
-    const [term, setTerm] = useState(60);
+interface TimerPropsType {
+    className: string;
+}
+
+export default function Timer({ className }: TimerPropsType) {
+    const [term, setTerm] = useState(4);
     const [isCounting, setIsCounting] = useState(false);
-    const totalSecondsDuration = useRef(60);
+    const totalSecondsDuration = useRef(4);
     const isFinishedCounting = useRef(true);
 
-    return <div className="w-[500px] h-[500px] relative">
+    return <div className={`relative ${className}`}>
         <TimerUI
             term={term}
             setTerm={setTerm}

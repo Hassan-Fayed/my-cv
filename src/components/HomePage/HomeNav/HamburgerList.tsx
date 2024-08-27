@@ -60,7 +60,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
         w-full box-border py-5
         animate-openDropdownList
         hidden
-        tablet:block
+        screen-s:block
     ">
         <ul className="mx-5 flex flex-col gap-[0.25rem] font-bold text-brand-lightMedium max-w-container-width">
             <li className="flex flex-col items-start gap-[0.12rem]">
@@ -70,8 +70,8 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
                 </button>
                 {isShowProjectsList && <ul className="relative left-[1rem] font-medium">
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.avlTree()}>AVL Tree</Link></li>
-                    <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.avlTree()}>Timer</Link></li>
-                    <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.timer()}>PokéFight</Link></li>
+                    <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.timer()}>Timer</Link></li>
+                    <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.pokeFight()}>PokéFight</Link></li>
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.toDo()}>To do</Link></li>
                 </ul>}
             </li>

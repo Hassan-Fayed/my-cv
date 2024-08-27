@@ -13,15 +13,14 @@ export default function HPBarPropsType({ total, current }: HPBarPropsType) {
     let remainingLifeWidth: string = getLifeBarWidth(percentage);
 
     return <div className={`
-        text-[0.75rem]
+        text-[max(0.75em,0.55rem)]
         w-full 
         ${pressStart2p.className}
-        flex
-        items-center
+        flex items-center
     `}>
         <span>HP:</span>
         <div className="
-            h-[1.1em]
+            h-[0.8em]
             border-box 
             border
             border-brand-dark

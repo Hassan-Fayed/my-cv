@@ -55,7 +55,7 @@ export default function ToDoPage() {
 
     const renderedTodoArr = toDoArr.map((toDo, idx) => {
         return <li key={toDo.id} className={`
-            px-3 pt-3 pb-9 flex flex-col gap-[1rem] justify-between
+            p-[1.5rem] flex flex-col gap-[1rem] justify-between
             ${idx % 2 === 0 ? 'bg-brand-darkLight' : 'bg-transparent'}
         `}>
             <TaskShow
@@ -68,31 +68,45 @@ export default function ToDoPage() {
         </li>;
     })
 
-    return <div className="bg-brand-light min-h-svh w-full flex flex-col items-center">
+    return <div className="bg-brand-light min-h-svh">
         <GeneralNav title="To Do List" />
-        <main className="max-w-container-width w-full pb-[8.09rem]">
-            <div className="mt-9">
-                <TextInput
-                    labelText="Enter a new task"
-                    onSubmit={handleFormSubmit}
-                    value={term}
-                    onChange={handleTermChange}
-                    inputFieldWidth="max-w-[61.805%] w-full"
-                    inputUniqueId="task-input"
-                />
-                <h2 className={`
-                    ${pressStart2p.className}
-                    text-brand-dark
-                    text-[1.5rem]
-                    mt-16
-                    mb-10
-                    relative
-                    left-[-0.381rem]
-                `}>TO BE DONE:</h2>
-                <ul>
-                    {renderedTodoArr}
-                </ul>
-            </div>
+        <main className="
+            text-[1rem]
+            max-w-container-width w-full mx-auto
+            pt-9 pb-[4.5rem] px-[2.168rem]
+            screen-xs:text-[0.9rem]
+            screen-2xs:text-[0.8rem]
+            screen-3xs:text-[0.7rem]
+        ">
+            <TextInput
+                labelText="Enter a new task"
+                onSubmit={handleFormSubmit}
+                value={term}
+                onChange={handleTermChange}
+                inputFieldWidth="
+                    w-[61.805%]
+                    screen-xs:w-full
+                "
+                inputUniqueId="task-input"
+                parentFontSize="
+                    text-[1rem] 
+                    screen-xs:text-[0.8rem]
+                "
+            />
+            <h2 className={`
+                ${pressStart2p.className}
+                text-brand-dark
+                text-[1.618em]
+                mt-16 mb-10
+            `}>
+                TO BE DONE:
+            </h2>
+            <ul className="
+                text-[1rem]
+                screen-xs:text-[0.8rem]
+            ">
+                {renderedTodoArr}
+            </ul>
         </main>
     </div>;
 }

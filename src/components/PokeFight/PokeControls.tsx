@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from "react";
+import { useRef } from "react";
 
 import Button from "../Button";
 import HPBar from "./HPBar";
@@ -16,6 +16,13 @@ interface PokeControlsPropsType {
 export default function PokeControls({ position }: PokeControlsPropsType) {
     const { leftPokemon, setLeftPokemon, rightPokemon, setRightPokemon } = usePokemonContext();
 
+    const attackSound = useRef<HTMLAudioElement | null>(null);
+    if (attackSound.current === null && typeof Audio !== 'undefined') {
+        attackSound.current = new Audio('/attack.mp3');
+        attackSound.current.volume = 0.5;
+    }
+
+
     const { pokemon, setPokemon } = position === 'left' ?
         { pokemon: leftPokemon, setPokemon: setLeftPokemon } :
         { pokemon: rightPokemon, setPokemon: setRightPokemon };
@@ -25,6 +32,7 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
         { opponentPokemon: leftPokemon, setOpponentPokemon: setLeftPokemon };
 
     const handleAttackClick = () => {
+        attackSound.current?.play();
         setOpponentPokemon((currOpponentPoke) => {
             if (currOpponentPoke)
                 return {
@@ -37,19 +45,22 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
     };
 
     return <>
-        {pokemon && <div className="flex flex-col gap-[0.4rem]">
-            <h2 className={`${pressStart2p.className} capitalize text-[1.5rem]`}>{pokemon.name}</h2>
-            <HPBar total={pokemon.hp} current={pokemon.currHp} />
-            <Button
-                disabled={!opponentPokemon}
-                className="self-end"
-                danger
-                parentBackgroundColor="bg-brand-light"
-                onClick={handleAttackClick}
-                fontSize="text-[0.75rem]"
-            >
-                Attack
-            </Button>
-        </div>}
+        {pokemon &&
+            <div className="flex flex-col gap-[0.4rem]">
+                <h2 className={`${pressStart2p.className} capitalize text-[max(1.5em,0.75rem)] break-all`}>
+                    {pokemon.name}
+                </h2>
+                <HPBar total={pokemon.hp} current={pokemon.currHp} />
+                <Button
+                    danger
+                    disabled={!opponentPokemon}
+                    className="self-end mt-[0.2em]"
+                    onClick={handleAttackClick}
+                    fontSize="text-[0.75rem]"
+                >
+                    Attack
+                </Button>
+            </div>
+        }
     </>;
 }

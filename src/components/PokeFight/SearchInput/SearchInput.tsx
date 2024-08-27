@@ -23,7 +23,7 @@ export default function SearchInput({
 }: SearchInputProps) {
     const [term, setTerm] = useState('');
     const [foundPokemon, setFoundPokemon] = useState<Pokemon | null>(null);
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState<React.ReactNode>(null);
 
     const { leftPokemon, setLeftPokemon, rightPokemon, setRightPokemon } = usePokemonContext();
     const { pokemon, setPokemon } = position === 'left' ?
@@ -33,6 +33,8 @@ export default function SearchInput({
     const debounceTimeoutId = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        setMessage(null);
+
         if (term.length > 0)
             debounce(fetchPokemon.bind(null, term, setFoundPokemon, setMessage), debounceTimeoutId)();
 
@@ -63,21 +65,47 @@ export default function SearchInput({
         setTerm('');
     }
 
-    return <div className={'relative ' + className}>
+    return <div className={
+        `relative 
+        ${className}
+        flex flex-col ${position === 'right' ? 'items-end' : ''} 
+    `}>
         <TextInput
             value={term}
-            labelText="Search for a Pokemon"
-            inputFieldWidth="w-full"
+            labelText="Find Pokemon"
             onChange={handleTermChange}
             onSubmit={handleSubmit}
             inputUniqueId={inputUniqueId}
+            parentFormClassName="z-10"
+            maxLength={16}
+            className={`
+                ${term && message ? 'focus:!outline-brand-accent !border-brand-accent' : ''}
+            `}
+            inputFieldWidth="w-full"
+            parentFontSize="text-[0.9em]"
         />
-        {term && message && <p className="text-brand-accent mt-2">{message}</p>}
+        {!!term && !!message &&
+            <p className={`
+                absolute ${position === 'left' ? 'left-[0]' : 'right-[0]'} top-[100%]
+                text-brand-accent bg-brand-light
+                w-full
+                p-[0.375em] 
+                text-[max(1em,0.75rem)]
+            `}>
+                {message}
+            </p>
+        }
         {!!foundPokemon && <List
             image={foundPokemon.frontImage}
             name={foundPokemon.name}
             handleListClick={handleListClick}
             setFoundPokemon={setFoundPokemon}
+            position={position}
+            className="
+                z-0 w-full absolute top-[2.6em] left-[0]
+                screen-s:top-[2.7em] 
+                screen-xs:top-[2.9em]
+            "
         />}
     </div>;
 }

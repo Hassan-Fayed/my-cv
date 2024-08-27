@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { usePokemonContext } from '@/context/pokemonContext';
 import PokeControls from "./PokeControls";
 import PokeImageShow from "./PokeImageShow";
@@ -9,34 +7,36 @@ import SearchInput from "./SearchInput/SearchInput";
 
 interface PokeShowProps {
     position: 'left' | 'right';
+    className: string;
 }
 
-export default function PokeShow({ position }: PokeShowProps) {
+export default function PokeShow({ position, className }: PokeShowProps) {
     const { leftPokemon, rightPokemon } = usePokemonContext();
 
     const { pokemon } = position === 'left' ? { pokemon: leftPokemon } : { pokemon: rightPokemon };
 
     return <div className={`
-        h-full 
-        w-[67%] 
-        flex 
-        flex-col 
-        ${position === 'left' ? 'justify-between' : 'justify-between'}
+        relative z-0
+        flex flex-col
+        ${className}
     `}>
         <SearchInput
             inputUniqueId={position === 'left' ? 'search-pokemon-left' : 'search-pokemon-right'}
-            className='w-full'
+            className='relative z-10'
             position={position}
         />
-        {pokemon && <div className={`
-            w-[20rem] 
-            flex 
-            flex-col 
-            ${position === 'left' ? 'self-start mb-5' : 'self-end mb-14'}
-        `}>
-            {position === 'left' && <PokeControls position='left' />}
-            <PokeImageShow position={position} />
-            {position === 'right' && <PokeControls position='right' />}
-        </div>}
+        {pokemon &&
+            <div className={`
+                w-full
+                flex flex-col
+                pt-[4rem]
+                relative z-0
+                ${position === 'left' ? 'self-start' : 'self-end'}
+            `}>
+                {position === 'left' && <PokeControls position='left' />}
+                <PokeImageShow position={position} />
+                {position === 'right' && <PokeControls position='right' />}
+            </div>
+        }
     </div>;
 }

@@ -19,16 +19,16 @@ export default function AVLTreeDisplay({ bSTRef }: AVLTreeDisplayProps) {
         });
     }
 
-    return <div className="min-w-full pb-[8.899rem]">
+    return <div className="
+        pb-[8.899rem] pt-[4rem]  
+    ">
         <div className="
-            relative
-            top-[5.5rem] 
-            text-brand-dark 
-            font-bold 
-            text-3xl 
-            w-max
-            ml-auto
-            mr-auto 
+            px-[2.168rem] screen-2xs:px-[1rem] 
+            w-max mx-auto
+            text-[1.875rem] font-bold text-brand-dark 
+            screen-s:text-[1.7rem]
+            screen-xs:text-[1.6rem]
+            screen-4xs:text-[1.5rem]
         ">
             {renderedTreeASCIIArr}
         </div>

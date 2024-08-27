@@ -20,18 +20,25 @@ export default function CanvasShow({ tenValuesImage, pixelLength }: CanvasShowPr
 
     return <>
         <canvas
-            className="w-[56.9rem]"
+            className="w-[56em] h-[39.2em]"
             ref={canvasElementRef}
             width={tenValuesImage.width}
             height={tenValuesImage.height}
-        ></canvas>
+        >
+            <Image
+                className="w-[56em] h-[39.2em]"
+                src="/heroImageAlternative.png"
+                alt="An ASCII style image of Hassan Fayed"
+                width={1000}
+                height={700}
+            />
+        </canvas>
         <Image
             className="hidden"
             ref={imgElementRef}
             src={tenValuesImage}
             alt=""
             priority
-        // onLoad={() => { console.log('Image load') }}
         />
     </>;
 }

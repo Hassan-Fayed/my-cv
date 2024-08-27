@@ -10,33 +10,41 @@ const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 export default function ContactInfoPage() {
     return <>
         <GeneralNav title="Contact me" />
-        <main className="bg-brand-light h-general-container-height w-full">
+        <main className="bg-brand-light min-h-general-container-height">
             <div className="
-                w-container-width 
+                text-[1rem]
+                px-[2.168rem] pt-[9.688rem]
+                max-w-container-width 
                 m-auto 
-                pt-[9.688rem]
+                screen-s:text-[0.9rem]
+                screen-xs:text-[0.8rem]
+                screen-2xs:text-[0.7rem]
+                screen-3xs:text-[0.6rem]
+                screen-4xs:text-[0.534rem]
             ">
                 <h2 className={`
                     ${pressStart2p.className} 
-                    text-[3.6rem] 
-                    mb-12
-                `}>Info:</h2>
-                <ul className="text-3xl text-brand-extraDark font-medium relative">
-                    <li>
+                    text-[3.6em] 
+                    mb-[0.75em]
+                `}>
+                    Info:
+                </h2>
+                <ul className="text-[1.875em] text-brand-extraDark font-medium relative">
+                    <li className="mb-[0.75em]">
                         <a
-                            className="flex items-center gap-5 mb-6 hover:underline"
+                            className="flex items-center gap-[0.75em] hover:underline"
                             href="tel:"
                         >
-                            <IoPhonePortraitSharp />
+                            <IoPhonePortraitSharp className="" />
                             +971-XX-1234567 - UAE
                         </a>
                     </li>
                     <li>
                         <a
-                            className="flex items-center gap-5 hover:underline"
+                            className="flex items-center gap-[0.75em] hover:underline"
                             href="mailto:fayed.hassan.aly@gmail.com"
                         >
-                            <IoMailSharp />
+                            <IoMailSharp className="" />
                             fayed.hassan.aly@gmail.com
                         </a>
                     </li>

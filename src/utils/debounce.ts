@@ -7,6 +7,6 @@ export default function debounce(func: () => void, timeoutIdRef: MutableRefObjec
             timeoutIdRef.current = null;
         }
 
-        timeoutIdRef.current = setTimeout(func, 500);
+        timeoutIdRef.current = setTimeout(func, 250);
     }
 }
