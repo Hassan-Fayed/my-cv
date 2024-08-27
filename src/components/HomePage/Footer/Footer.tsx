@@ -7,20 +7,19 @@ export default function Footer() {
     return <footer className="h-[61.805svh] bg-brand-dark flex justify-center relative">
         <div className="
             max-w-container-width 
-            w-full 
-            flex 
-            flex-col 
-            justify-center 
-            items-center
-            gap-5
+            flex flex-col justify-center items-center
+            text-[1rem]
+            screen-md:text-[0.9rem]
+            screen-s:text-[0.8rem]
+            screen-2xs:text-[0.7rem]
+            screen-3xs:text-[0.6rem]
         ">
-            <div className={`
-                text-brand-regular
-                text-3xl
-            `}>{'I appreciate your visit (^_^)'}</div>
+            <p className="text-brand-regular text-[max(1.875em,1rem)] mb-[0.5em]">
+                {'I appreciate your visit (^_^)'}
+            </p>
             <Link href="/contact-info" className="
                 text-[#529989]
-                text-3xl
+                text-[max(1.875em,1rem)]
                 hover:text-brand-light
                 transition-colors
             ">Contact me</Link>
@@ -30,9 +29,9 @@ export default function Footer() {
                     color="text-brand-light"
                     hoverColor="group-hover:text-brand-light"
                     hoverBackgroundColor="hover:bg-brand-darkMedium"
-                    hoverContainerDimensions="w-[2.9rem] h-[2.9rem]"
+                    hoverContainerDimensions="w-[2.9em] h-[2.9em]"
                     to="#top"
-                    fontSize="text-[4rem]"
+                    fontSize="text-[max(4em,1rem)]"
                 >
                     <IoMdArrowDropup className="relative top-[-0.125rem]" />
                 </IconLink>

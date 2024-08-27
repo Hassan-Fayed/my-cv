@@ -12,10 +12,19 @@ interface ListPropsType {
     name: string;
     handleListClick: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
     setFoundPokemon: Dispatch<SetStateAction<Pokemon | null>>;
+    className?: string;
+    position: 'left' | 'right';
 }
 
 
-export default function List({ image, name, handleListClick, setFoundPokemon }: ListPropsType) {
+export default function List({
+    image,
+    name,
+    handleListClick,
+    setFoundPokemon,
+    className = '',
+    position,
+}: ListPropsType) {
     const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -30,25 +39,20 @@ export default function List({ image, name, handleListClick, setFoundPokemon }: 
     }, [setFoundPokemon]);
 
 
-    return <div ref={listRef} onClick={handleListClick} className="
+    return <div ref={listRef} onClick={handleListClick} className={`
         animate-openDropdownList
         bg-brand-darkLight 
-        flex 
-        gap-2
-        items-center 
-        border-brand-regular
-        border
-        text-2xl
-        hover:cursor-pointer
-        hover:bg-brand-regular
-        w-full
-        absolute
-        z-20
-        top-[4.5rem]
-        left-[0]
-        p-2
-    ">
-        <Image src={image} width={96} height={96} alt={`An Image of a ${name}`} />
+        flex items-center gap-[0.6em] 
+        border border-brand-regular
+        text-[max(1.5em,1rem)]
+        hover:cursor-pointer hover:bg-brand-regular
+        p-[0.3em]
+        ${className}
+    `}>
+        <Image src={image} width={96} height={96} alt={`An Image of a ${name}`} className="
+            w-[max(30%,0.5rem)] h-auto
+            screen-xs:hidden
+        " />
         <p className="capitalize">{name}</p>
     </div>;
 }

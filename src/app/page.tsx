@@ -12,11 +12,15 @@ export default function Home() {
     <Hero />
     <Section
       isOpaqueBG={false}
-      paddingY="pt-[9.688rem] pb-[21rem]"
+      paddingY="
+        pt-[9.688em] pb-[21em]
+        screen-s:py-32
+        screen-3xs:py-24
+      "
       title={<>
         Educa
-        <span className="relative right-[0.6rem]">t</span>
-        <span className="relative right-[1.1rem]">ion</span>
+        <span className="relative right-[0.2em]">t</span>
+        <span className="relative right-[0.35em]">ion</span>
       </>}
       content={[
         {
@@ -31,18 +35,32 @@ export default function Home() {
         }
       ]}
     />
-    <div className="relative">
+    <div className="
+      relative text-[1rem]
+      screen-xl:text-[0.9rem]
+      screen-slg:text-[0.8rem]
+      screen-md:text-[0.7rem]
+      screen-smd:text-[0.62rem]
+    ">
       <Image
-        width="500"
-        height="290"
-        className="absolute top-[-12rem] right-[12rem]"
+        width="1000"
+        height="598"
+        className="
+          w-[31.25em] h-auto
+          absolute top-[-12em] right-[8em]
+          screen-s:hidden
+        "
         alt=""
         src="/pizza.png"
       />
       <Section
         isOpaqueBG
-        paddingY="pt-[9.688rem] pb-[39rem]"
-        title={<>Exper<span className="relative right-[0.45rem]">ience</span></>}
+        paddingY="
+          pt-[9.688em] pb-[39em]
+          screen-s:py-32
+          screen-3xs:py-24
+        "
+        title={<>Exper<span className="relative right-[0.14em]">ience</span></>}
         content={[
           {
             subTitle: 'Digital illustrator',
@@ -52,9 +70,13 @@ export default function Home() {
         ]}
       />
       <Image
-        height="500"
-        width="212"
-        className="absolute bottom-[4.1rem] left-[4.1rem]"
+        height="1000"
+        width="423"
+        className="
+          w-auto h-[31.25em]
+          absolute bottom-[4.1em] left-11
+          screen-s:hidden
+        "
         alt=""
         src="/soda.png"
       />

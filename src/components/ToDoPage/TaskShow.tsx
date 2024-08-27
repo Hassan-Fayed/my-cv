@@ -38,7 +38,7 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
             !isEdit ?
                 <>
                     <span className={`
-                        text-2xl 
+                        text-[1.5em]
                         relative
                         flex
                         items-start
@@ -48,22 +48,17 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
                         before:w-2
                         before:h-2
                         before:relative
-                        before:top-[1.06rem]
+                        before:top-[1.2rem]
                         before:shrink-0
-                    `}>{task}</span>
+                        screen-xs:before:top-[0.85rem]
+                    `}>
+                        {task}
+                    </span>
                     <span className="inline-flex gap-2 self-end shrink-0">
-                        <Button onClick={handleEditClick} fontSize="text-xs" regular
-                            parentBackgroundColor={
-                                idx % 2 === 0 ? 'bg-brand-darkLight' : 'bg-brand-light'
-                            }
-                        >
+                        <Button onClick={handleEditClick} fontSize="text-xs" regular>
                             Edit
                         </Button>
-                        <Button onClick={() => onDeleteClick(id)} fontSize="text-xs" danger
-                            parentBackgroundColor={
-                                idx % 2 === 0 ? 'bg-brand-darkLight' : 'bg-brand-light'
-                            }
-                        >
+                        <Button danger onClick={() => onDeleteClick(id)} fontSize="text-xs">
                             Done
                         </Button>
                     </span>
@@ -74,14 +69,15 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
                     before:w-2
                     before:h-2
                     before:relative
-                    before:top-[1.06rem]
+                    before:top-[1.3rem]
                     before:shrink-0
-                    flex
-                    gap-3
+                    flex gap-3
+                    screen-xs:before:top-[0.95rem]
                 ">
                     <input autoFocus onChange={handleTermChange} value={term} type="text" className="
-                        text-2xl
-                        pl-2 
+                        text-[1.5em]
+                        w-full
+                        pl-[0.5rem]
                         text-brand-dark
                         border
                         border-brand-regular

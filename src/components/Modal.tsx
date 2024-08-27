@@ -35,6 +35,11 @@ export default function Modal() {
             fixed z-20 top-[0] left-[0]
             w-full h-svh 
             flex justify-center items-center
+            text-[1rem]
+            screen-slg:text-[0.95rem]
+            screen-md:text-[0.8rem]
+            screen-smd:text-[0.7rem]
+            screen-2xs:text-[0.5rem]
         ">
             <button
                 onClick={handleCloseModalClick}
@@ -48,12 +53,11 @@ export default function Modal() {
             </button>
             <p ref={modalContentRef} className="
                 bg-brand-light 
-                text-3xl 
-                opacity-[100%] 
+                text-[max(1.875em,1rem)] 
                 w-[57%] 
-                px-[3rem] 
-                pt-[1.854rem] 
-                pb-[2.5rem]
+                px-[1.5em] 
+                pt-[1.5em] 
+                pb-[2em]
             ">
                 This project was created to showcase my React skills. I used Nextjs, Tailwindcss, and Classnames.
             </p>

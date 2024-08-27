@@ -20,8 +20,8 @@ export default function TimerCanvasShow({
         drawCounter(canvasRef, currentAngleFactor);
     }, [currentAngleFactor]);
 
-    return <canvas ref={canvasRef} width="500" height="500">
-        counter
+    return <canvas className="w-[31.25em] h-[31.25em]" ref={canvasRef} width="500" height="500">
+        Timer
     </canvas>;
 }
 

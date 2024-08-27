@@ -30,7 +30,7 @@ export default function AvlTreePage() {
         }
     };
 
-    return <div className="h-svh overflow-x-scroll bg-brand-light">
+    return <div className="min-h-svh overflow-x-scroll bg-brand-light">
         <AVLTreeNav
             term={term}
             setTerm={setTerm}

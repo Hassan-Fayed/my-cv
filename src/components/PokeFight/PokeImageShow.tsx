@@ -27,17 +27,13 @@ export default function PokeImageShow({ position }: PokeImageShowProps) {
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         ctx.drawImage(e.target as HTMLImageElement, 0, 0, canvasRef.current.width, canvasRef.current.height);
 
-        if (cry) {
-            const sound = new Audio(cry);
-            sound.volume = 0.5;
-            sound.play();
-        }
+        if (cry) cry.play();
     }
 
     return <>
         {name && image && <div className="relative">
             <Image
-                className="w-full absolute top-[0] left-[0] z-0 opacity-0"
+                className="absolute top-[0] left-[0] z-0 opacity-0"
                 src={image}
                 alt={`An illustration of the pokemon ${name}`}
                 width="96"
@@ -47,7 +43,7 @@ export default function PokeImageShow({ position }: PokeImageShowProps) {
             <canvas
                 ref={canvasRef}
                 style={{ imageRendering: 'pixelated' }}
-                className={`w-full relative z-10 ${position === 'left' ? 'mt-2' : 'mb-2'}`}
+                className={`w-full h-auto relative z-10 ${position === 'left' ? 'mt-[1rem]' : 'mb-[1rem]'}`}
                 width="96"
                 height="96"
             ></canvas>
