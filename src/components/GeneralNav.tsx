@@ -13,7 +13,7 @@ export default function GeneralNav({ title }: GeneralNavProps) {
     return <nav className="
         text-[1rem]
         h-[4.7rem] w-full 
-        sticky top-[0] left-[0] z-10
+        sticky top-[0] left-[0] z-20
         screen-xs:text-[0.9rem]
         screen-2xs:text-[0.8rem]
         screen-3xs:text-[0.7rem]

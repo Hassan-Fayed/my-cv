@@ -1,14 +1,19 @@
 import classNames from "classnames";
 import type { MouseEvent } from "react";
+import { useFormStatus } from "react-dom";
+import { IoReloadSharp } from "react-icons/io5";
 
 interface ButtonProps {
     regular?: boolean;
     danger?: boolean;
     children: string;
     fontSize?: string;
-    onClick: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
     disabled?: boolean;
     className?: string;
+    type?: "button" | "submit";
+    isInActionForm?: boolean;
+    width?: string;
 }
 
 function Button({
@@ -18,13 +23,17 @@ function Button({
     fontSize = 'text-base',
     onClick,
     disabled = false,
-    className = "",
+    className = '',
+    type = "button",
+    width = '',
 }: ButtonProps) {
+    const { pending } = useFormStatus();
+
     const spanClassName = classNames(
         'inline-block',
         'text-brand-extraLight font-semibold',
         'px-[0.6em] py-[0.2em]',
-        'border-[0.1em] border-brand-dark',
+        'border-[0.1em] border-brand-extraDark',
         'relative bottom-[0.4em] z-10',
         'group-hover:translate-y-[0.2em]',
         'transition-transform duration-[0.07s] ease-out',
@@ -33,16 +42,23 @@ function Button({
             'bg-brand-medium': !!regular,
             'bg-brand-accent': !!danger,
             'bg-brand-neutral translate-y-[0.4em] border-brand-lightMedium group-hover:translate-y-[0.4em]': !!disabled,
+            [width]: !!width,
         },
     );
 
-    return <button disabled={disabled} onClick={onClick} type="button" className={`
-        relative ${fontSize} ${className} w-max
-        before:content-[''] before:bg-brand-dark 
+    return <button disabled={disabled || pending} onClick={onClick} type={type} className={`
+        relative w-max group 
+        before:content-[''] before:bg-brand-extraDark 
         before:absolute before:inset-0 before:z-0
-        group
+        ${fontSize} ${className}
     `}>
-        <span className={spanClassName}>{children}</span>
+        <span className={spanClassName}>
+            {
+                !pending ?
+                    children :
+                    <IoReloadSharp className="text-brand-extraLight animate-spin mx-auto" />
+            }
+        </span>
     </button>;
 }
 

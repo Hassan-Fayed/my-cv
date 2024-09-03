@@ -15,7 +15,10 @@ const paths = {
         return '/projects/poke-fight';
     },
     contactInfo() {
-        return '/contact-info'
+        return '/contact-info';
+    },
+    comments() {
+        return '/projects/comments';
     }
 };
 
