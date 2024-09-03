@@ -33,7 +33,8 @@ const config: Config = {
       spacing: {
         'container-width': '70rem',
         'projects-container-width': '92rem',
-        'general-container-height': 'calc(100svh - 4.7rem)'
+        'general-container-height': 'calc(100svh - 4.7rem)',
+        'small-container-width': '43rem'
       },
       boxShadow: {
         'brand-xl': '0 20px 25px -5px rgb(0 28 30 / 0.1), 0 8px 10px -6px rgb(0 28 30 / 0.1)',

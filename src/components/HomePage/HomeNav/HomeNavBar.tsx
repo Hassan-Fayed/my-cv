@@ -60,7 +60,9 @@ export default function HomeNavBar() {
                         items-center
                         relative
                         left-[0.2rem]
-                    ">HF</Link>
+                    ">
+                        HF
+                    </Link>
                 </li>
                 <li className="flex relative screen-s:hidden">
                     <NavDropdown
@@ -70,6 +72,7 @@ export default function HomeNavBar() {
                             { title: 'Timer', link: paths.timer() },
                             { title: 'PokéFight', link: paths.pokeFight() },
                             { title: 'To do', link: paths.toDo() },
+                            { title: 'Comments', link: paths.comments() },
                         ]}
                     />
                 </li>
