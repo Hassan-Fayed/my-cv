@@ -4,6 +4,7 @@ import { useRef } from "react";
 import type { ChangeEvent, Dispatch, SetStateAction, MutableRefObject, FormEvent } from "react";
 
 import Button from '@/components/Button';
+import SmallRoundButton from "../SmallRoundButton";
 
 interface CounterUIProp {
     term: number;
@@ -130,23 +131,13 @@ export default function TimerUI({
                     Stop
                 </Button>
             </fieldset>
-            <fieldset className="flex flex-col items-center">
-                <button
-                    onClick={handleResetClick}
-                    disabled={isCounting}
-                    type="button"
+            <fieldset className="flex flex-col items-center gap-[0.15rem] font-medium">
+                <SmallRoundButton
                     id="reset"
-                    className={`
-                        w-[0.7em] 
-                        h-[0.7em] 
-                        bg-brand-dark
-                        hover:bg-brand-medium
-                        transition-colors
-                        rounded-[50%] 
-                        ${isCounting && 'bg-brand-neutral hover:bg-brand-neutral'}
-                    `}
-                ></button>
-                <label htmlFor="reset" className="text-[1em]">Reset</label>
+                    disabled={isCounting}
+                    onClick={handleResetClick}
+                />
+                <label htmlFor="reset" className="text-[1em] text-brand-dark">Reset</label>
             </fieldset>
         </div>
     </form>;

@@ -35,13 +35,16 @@ function Button({
         'px-[0.6em] py-[0.2em]',
         'border-[0.1em] border-brand-extraDark',
         'relative bottom-[0.4em] z-10',
-        'group-hover:translate-y-[0.2em]',
         'transition-transform duration-[0.07s] ease-out',
-        'group-active:translate-y-[0.4em] group-active:duration-[0.01s] group-active:ease-in ',
+        'group-hover:translate-y-[0.2em]',
+        'group-active:translate-y-[0.4em] group-active:duration-[0.01s] group-active:ease-in',
         {
             'bg-brand-medium': !!regular,
             'bg-brand-accent': !!danger,
-            'bg-brand-neutral translate-y-[0.4em] border-brand-lightMedium group-hover:translate-y-[0.4em]': !!disabled,
+            [`
+                translate-y-[0.4em] group-hover:translate-y-[0.4em]
+                bg-brand-neutral border-brand-lightMedium 
+            `]: !!disabled,
             [width]: !!width,
         },
     );
