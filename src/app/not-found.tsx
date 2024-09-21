@@ -8,27 +8,45 @@ const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
 export default function NotFound() {
     return <div className="
-        w-full h-svh bg-brand-light 
-        flex flex-col justify-center items-center gap-5
+        w-full h-svh bg-brand-light m-auto
+        flex justify-center items-center
     ">
-        <h1 className={`${pressStart2p.className} text-9xl text-brand-medium`}>404</h1>
-        <p className="text-4xl text-brand-medium font-medium">Opps! Page not found.</p>
-        <Link className="
-            mt-10
-            text-xl
-            font-medium
-            bg-brand-medium 
-            text-brand-light 
-            hover:bg-brand-darkRegular
-            hover:text-brand-extraLight
-            px-[0.75rem] py-[0.25rem]
-            relative
-        " href={paths.home()}>
-            <div className="w-[0.3rem] h-[0.4rem] bg-brand-light absolute left-[0] top-[0]"></div>
-            <div className="w-[0.3rem] h-[0.4rem] bg-brand-light absolute right-[0] top-[0]"></div>
-            <div className="w-[0.3rem] h-[0.4rem] bg-brand-light absolute left-[0] bottom-[0]"></div>
-            <div className="w-[0.3rem] h-[0.4rem] bg-brand-light absolute right-[0] bottom-[0]"></div>
-            Back to home page
-        </Link>
+        <div className="flex flex-col items-center">
+            <h1 className={`
+                ${pressStart2p.className} 
+                text-[5rem] 
+                leading-none text-brand-medium
+                relative left-[0.04em]
+                mb-[0.3rem]
+            `}>
+                404
+            </h1>
+            <p className="text-[2rem] text-brand-dark font-medium">
+                Page not found.
+            </p>
+            <Link
+                className="
+                    mt-[2.5rem]
+                    relative w-max group 
+                    before:content-[''] before:bg-brand-extraDark 
+                    before:absolute before:inset-0 before:z-0
+                "
+                href={paths.home()}
+            >
+                <span className="
+                    inline-block
+                    text-brand-extraLight font-semibold text-[1rem]
+                    px-[0.6em] py-[0.2em]
+                    border-[0.1em] border-brand-extraDark
+                    relative bottom-[0.4em] z-10
+                    transition-transform duration-[0.07s] ease-out
+                    group-hover:translate-y-[0.2em]
+                    group-active:translate-y-[0.4em] group-active:duration-[0.01s] group-active:ease-in
+                    bg-brand-medium
+                ">
+                    Back to home page
+                </span>
+            </Link>
+        </div>
     </div>
 }
