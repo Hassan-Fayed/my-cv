@@ -59,7 +59,7 @@ export default function Modal() {
                 pt-[1.5em] 
                 pb-[2em]
             ">
-                This project was created to showcase my React skills. I used Nextjs, Tailwindcss, and Classnames.
+                I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase.
             </p>
         </div>,
             document.getElementsByClassName('modal-container')[0]

@@ -74,7 +74,7 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
                     flex gap-3
                     screen-xs:before:top-[0.95rem]
                 ">
-                    <input autoFocus onChange={handleTermChange} value={term} type="text" className="
+                    <input required autoFocus onChange={handleTermChange} value={term} type="text" className="
                         text-[1.5em]
                         w-full
                         pl-[0.5rem]

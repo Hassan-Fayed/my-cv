@@ -1,14 +1,16 @@
 import { onValue } from 'firebase/database';
+import { cache } from 'react';
 
 import GeneralNav from "@/components/GeneralNav"
-import AddComment from "@/components/CommentsPage/AddComment"
+import AddCommentContainer from '@/components/CommentsPage/AddCommentContainer';
 import CommentsShow from "@/components/CommentsPage/CommentsShow";
-import { getCommentsFirebaseRef } from "@/utils/firebaseConfig";
+import { commentsRef } from "@/firebase/firebaseConfig";
 
 interface Comment {
     id: string;
     name: string;
     content: string;
+    ownerUid: string;
 }
 
 export default async function CommentsPage() {
@@ -24,16 +26,15 @@ export default async function CommentsPage() {
                 max-w-[43rem] 
                 m-auto py-[3.975rem] 
             ">
-                <AddComment className="mb-[2.3rem]" />
+                <AddCommentContainer />
                 <CommentsShow comments={comments} />
             </div>
         </main>
     </>
 }
 
-function fetchComments(): Promise<Comment[]> {
-    const commentsRef = getCommentsFirebaseRef();
-    let comments: Comment[] = [];
+const fetchComments = cache((): Promise<Comment[]> => {
+    const comments: Comment[] = [];
 
     return new Promise((resolve, reject) => {
         onValue(commentsRef, (snapshot) => {
@@ -43,16 +44,11 @@ function fetchComments(): Promise<Comment[]> {
                     id: key,
                     name: data[key].name,
                     content: data[key].content,
+                    ownerUid: data[key].ownerUid,
                 });
             }
-
-            comments.unshift({
-                id: 'mySpecialComment',
-                name: 'Hassan',
-                content: 'Hello! I\'m looking forward to reading your comments.',
-            });
 
             resolve(comments);
         });
     });
-}
+});

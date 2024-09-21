@@ -39,12 +39,12 @@ function Button({
         'group-hover:translate-y-[0.2em]',
         'group-active:translate-y-[0.4em] group-active:duration-[0.01s] group-active:ease-in',
         {
-            'bg-brand-medium': !!regular,
-            'bg-brand-accent': !!danger,
+            'bg-brand-medium': regular,
+            'bg-brand-accent': danger,
             [`
                 translate-y-[0.4em] group-hover:translate-y-[0.4em]
                 bg-brand-neutral border-brand-lightMedium 
-            `]: !!disabled,
+            `]: disabled || pending,
             [width]: !!width,
         },
     );
