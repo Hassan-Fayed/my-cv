@@ -7,7 +7,7 @@ export default async function setAntiCSRFCookie() {
     const hashedAntiCSRFToken = await hash(antiCSRFToken);
 
     Cookies.set('antiCSRFToken', hashedAntiCSRFToken, {
-        expires: 1, // one day - needs to be changed to 5 minutes
+        expires: new Date(new Date().getTime() + 2 * 60 * 1000), // 2 minutes
         secure: true,
         sameSite: 'strict',
     });
