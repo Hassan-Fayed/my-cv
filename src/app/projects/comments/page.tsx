@@ -1,20 +1,18 @@
-import { onValue } from 'firebase/database';
-import { cache } from 'react';
-
 import GeneralNav from "@/components/GeneralNav"
 import AddCommentContainer from '@/components/CommentsPage/AddCommentContainer';
 import CommentsShow from "@/components/CommentsPage/CommentsShow";
-import { commentsRef } from "@/firebase/firebaseConfig";
-
-interface Comment {
-    id: string;
-    name: string;
-    content: string;
-    ownerUid: string;
-}
+import fetchComments from "@/utils/fetchComments";
+import type { Comment } from "@/utils/fetchComments";
 
 export default async function CommentsPage() {
-    const comments = await fetchComments();
+    const comments: Comment[] = [];
+
+    try {
+        await fetchComments(comments);
+    } catch (err) {
+        if (err && typeof err === 'object' && 'message' in err)
+            throw new Error('Somethin went wrong! Please, try again latter');
+    }
 
     return <>
         <GeneralNav title="Comments" />
@@ -32,23 +30,3 @@ export default async function CommentsPage() {
         </main>
     </>
 }
-
-const fetchComments = cache((): Promise<Comment[]> => {
-    const comments: Comment[] = [];
-
-    return new Promise((resolve, reject) => {
-        onValue(commentsRef, (snapshot) => {
-            const data = snapshot.val();
-            for (let key in data) {
-                comments.unshift({
-                    id: key,
-                    name: data[key].name,
-                    content: data[key].content,
-                    ownerUid: data[key].ownerUid,
-                });
-            }
-
-            resolve(comments);
-        });
-    });
-});
