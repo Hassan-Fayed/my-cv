@@ -87,7 +87,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor=""
                         hoverContainerDimensions=""
-                        to="https://www.github.com/HassanFayed8"
+                        to={process.env.NEXT_PUBLIC_MY_GITHUB || ''}
                         fontSize="text-[1.6rem]"
                     >
                         <FaGithub />
@@ -100,7 +100,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor=""
                         hoverContainerDimensions=""
-                        to="/"
+                        to={process.env.NEXT_PUBLIC_MY_LINKEDIN || ''}
                         fontSize="text-[1.32rem]"
                     >
                         <FaLinkedinIn />
@@ -113,7 +113,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor=""
                         hoverContainerDimensions=""
-                        to="https://www.behance.net/FayArts"
+                        to={process.env.NEXT_PUBLIC_MY_BEHANCE || ''}
                         fontSize="text-[1.6rem]"
                     >
                         <FaBehance className="relative top-[0.0375rem] left-[0.0375rem]" />
