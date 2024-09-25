@@ -91,7 +91,7 @@ export default function HomeNavBar() {
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor="hover:bg-brand-darkLight"
                         hoverContainerDimensions="w-[2.9rem] h-[2.9rem]"
-                        to="https://www.github.com/HassanFayed8"
+                        to={process.env.NEXT_PUBLIC_MY_GITHUB || ''}
                         fontSize="text-[1.7rem]"
                     >
                         <FaGithub />
@@ -104,7 +104,7 @@ export default function HomeNavBar() {
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor="hover:bg-brand-darkLight"
                         hoverContainerDimensions="w-[2.9rem] h-[2.9rem]"
-                        to="/"
+                        to={process.env.NEXT_PUBLIC_MY_LINKEDIN || ''}
                         fontSize="text-[1.4rem]"
                     >
                         <FaLinkedinIn />
@@ -117,7 +117,7 @@ export default function HomeNavBar() {
                         hoverColor="group-hover:text-brand-extraDark"
                         hoverBackgroundColor="hover:bg-brand-darkLight"
                         hoverContainerDimensions="w-[2.9rem] h-[2.9rem]"
-                        to="https://www.behance.net/FayArts"
+                        to={process.env.NEXT_PUBLIC_MY_BEHANCE || ''}
                         fontSize="text-[1.7rem]"
                     >
                         <FaBehance className="relative top-[0.0375rem] left-[0.0375rem]" />
