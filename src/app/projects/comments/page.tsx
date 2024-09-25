@@ -3,15 +3,17 @@ import AddCommentContainer from '@/components/CommentsPage/AddCommentContainer';
 import CommentsShow from "@/components/CommentsPage/CommentsShow";
 import fetchComments from "@/utils/fetchComments";
 import type { Comment } from "@/utils/fetchComments";
+import CommentsLinkedList from "@/utils/commentsLinkedList";
 
 export default async function CommentsPage() {
-    const comments: Comment[] = [];
+    const commentsLinkedList = new CommentsLinkedList();
+    let comments: Comment[] = [];
 
     try {
-        await fetchComments(comments);
+        comments = await fetchComments(commentsLinkedList);
     } catch (err) {
         if (err && typeof err === 'object' && 'message' in err)
-            throw new Error('Somethin went wrong! Please, try again latter');
+            throw new Error('Somethin went wrong! Please, try again later');
     }
 
     return <>
