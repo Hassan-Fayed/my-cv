@@ -1,5 +1,3 @@
-import { expect, it, describe } from 'vitest';
-
 import CommentsLinkedList from './commentsLinkedList';
 import type { Comment } from './fetchComments';
 
