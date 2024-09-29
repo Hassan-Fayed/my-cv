@@ -1,0 +1,9 @@
+label:has(+ input#enter-comment-owner:focus), 
+label:has(+ textarea#enter-comment-content:focus)
+{
+    font-weight: bold;
+}
+
+label[for = "enter-comment-owner"], label[for = "enter-comment-content"] {
+    transition: font-weight 100ms ease-out;
+}
