@@ -1,5 +1,7 @@
 'use client';
 
+import './add-comment.css';
+
 import { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
@@ -77,13 +79,16 @@ export default function AddComment({ className = '' }: AddCommentPropsType) {
                 setIsShowMessage(true);
             }
         }>
-            <label className="
-                    flex flex-col 
-                    text-brand-medium 
-                    transition-[font-weight]
-            ">
-                Enter your name:
+            <fieldset className="flex flex-col">
+                <label htmlFor="enter-comment-owner" className="
+                        peer
+                        self-start
+                        text-brand-medium 
+                ">
+                    Enter your name:
+                </label>
                 <input
+                    id="enter-comment-owner"
                     disabled={authMessage.state !== 'success'}
                     required
                     name="name"
@@ -96,31 +101,34 @@ export default function AddComment({ className = '' }: AddCommentPropsType) {
                         border border-brand-regular
                         focus:outline-none focus:outline-brand-lightMedium
                         focus:outline-offset-[-1px] focus:rounded-none
-                    " />
-            </label>
-            <label className="
-                text-brand-medium 
-                flex flex-col
-                transition-[font-weight]
-            ">
-                Enter your comment:
+                " />
+            </fieldset>
+            <fieldset className="flex flex-col">
+                <label htmlFor="enter-comment-content" className="
+                    self-start
+                    text-brand-medium 
+                    flex flex-col
+                ">
+                    Enter your comment:
+                </label>
                 <textarea
+                    id="enter-comment-content"
                     disabled={authMessage.state !== 'success'}
                     required
                     name="content"
                     className="
-                        resize-none
-                        mt-[0.25rem] px-[0.5rem]
-                        text-[1.3rem] screen-4xs:text-[1rem]
-                        border border-brand-regular
-                        focus:outline-none focus:outline-brand-lightMedium
-                        focus:outline-offset-[-1px] focus:rounded-none
-                    "
+                            resize-none
+                            mt-[0.25rem] px-[0.5rem]
+                            text-[1.3rem] screen-4xs:text-[1rem]
+                            border border-brand-regular
+                            focus:outline-none focus:outline-brand-lightMedium
+                            focus:outline-offset-[-1px] focus:rounded-none
+                        "
                 ></textarea>
-            </label>
+            </fieldset>
             <div className="mt-[0.4rem] flex justify-between items-end gap-[1rem]">
                 <p className={`
-                    px-[0.77rem] self-stretch
+                    px-[0.77rem] py-[0.48rem] self-stretch
                     text-[1rem] text-brand-extraLight tracking-wide font-bold 
                     flex justify-center items-center
                     ${(() => {

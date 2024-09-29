@@ -63,7 +63,7 @@ function drawASCIIImage(canvas: HTMLCanvasElement, img: HTMLImageElement, pixelL
             if (scannedImageData[position + 3] >= 255) {
                 ctx.fillStyle = '#001314';
                 ctx.fillRect(x, y, pixelLength, pixelLength);
-                ctx.fillStyle = '#f7fff2';
+                ctx.fillStyle = '#fafff7';
 
                 if (scannedImageData[position] < 28 && scannedImageData[position] >= 0)
                     ctx.fillText(' ', x + pixelLength / 2, y);
@@ -79,9 +79,9 @@ function drawASCIIImage(canvas: HTMLCanvasElement, img: HTMLImageElement, pixelL
                     ctx.fillText('7', x + pixelLength / 2, y);
                 else if (scannedImageData[position] < 198 && scannedImageData[position] >= 170)
                     ctx.fillText('9', x + pixelLength / 2, y);
-                else if (scannedImageData[position] < 227 && scannedImageData[position] >= 198)
+                else if (scannedImageData[position] < 228 && scannedImageData[position] >= 198)
                     ctx.fillText('W', x + pixelLength / 2, y);
-                else if (scannedImageData[position] <= 255 && scannedImageData[position] >= 227)
+                else if (scannedImageData[position] <= 255 && scannedImageData[position] >= 228)
                     ctx.fillText('@', x + pixelLength / 2, y);
             }
         }

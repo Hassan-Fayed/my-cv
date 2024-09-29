@@ -17,7 +17,7 @@ const config: Config = {
         brand: {
           extraLight: '#f7fff2',
           light: '#ebfce1',
-          darkLight: '#d0e5c3',
+          darkLight: '#d3e5c8',
           regular: '#8ec571',
           darkRegular: '#6fb14c',
           darkerRegular: '#67a148',
