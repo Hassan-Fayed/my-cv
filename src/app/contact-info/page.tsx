@@ -42,7 +42,7 @@ export default function ContactInfoPage() {
                             href="tel:"
                         >
                             <IoPhonePortraitSharp className="relative left-[0.12em]" />
-                            +971-XX-1234567 - UAE
+                            +971 58 298 1011 - Dubai, UAE
                         </a>
                     </li>
                     <li>
