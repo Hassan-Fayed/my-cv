@@ -39,19 +39,19 @@ export default function ContactInfoPage() {
                     <li>
                         <a
                             className="flex items-center gap-[0.75em] hover:underline"
-                            href="tel:"
+                            href={`tel:${process.env.NEXT_PUBLIC_PHONE}`}
                         >
                             <IoPhonePortraitSharp className="relative left-[0.12em]" />
-                            +971-XX-1234567 - UAE
+                            {process.env.NEXT_PUBLIC_PHONE + ' - ' + process.env.NEXT_PUBLIC_COUNTRY}
                         </a>
                     </li>
                     <li>
                         <a
                             className="flex items-center gap-[0.75em] hover:underline"
-                            href="mailto:fayed.hassan.aly@gmail.com"
+                            href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
                         >
                             <IoMailSharp className="relative top-[0.1em]" />
-                            fayed.hassan.aly@gmail.com
+                            {process.env.NEXT_PUBLIC_EMAIL}
                         </a>
                     </li>
                     <li>
