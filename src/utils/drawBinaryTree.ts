@@ -88,8 +88,8 @@ function constructTreeLvlsArr(treeArr: (number | null)[]) {
 function add_s(treeStrLvlsArr: string[]) {
     let currGeoPosition = 1;
     let _sAmout = 2;
-    let _sIncrementAmount;
-    let _s;
+    let _sIncrementAmount: number;
+    let _s: string;
     for (let i = treeStrLvlsArr.length - 5; i >= 0; i -= 2) {
         _s = write_s(_sAmout);
         treeStrLvlsArr[i] = _s + treeStrLvlsArr[i] + _s;
@@ -105,8 +105,8 @@ function add_s(treeStrLvlsArr: string[]) {
 function addInnerSpaces(treeStrLvlsArr: string[]) {
     let currGeoPosition = 1;
     let spacesAmount = 2;
-    let innerSpaces;
-    let spacesIncrementAmount;
+    let innerSpaces: string;
+    let spacesIncrementAmount: number;
     for (let i = treeStrLvlsArr.length - 1; i >= 2; i -= 2) {
         innerSpaces = writeSpaces(spacesAmount);
         treeStrLvlsArr[i] = treeStrLvlsArr[i].replace(/ /g, innerSpaces);
@@ -120,12 +120,11 @@ function addInnerSpaces(treeStrLvlsArr: string[]) {
 }
 
 function addOuterSpaces(treeStrLvlsArr: string[]) {
-    let currGeoPosition = 1;
+    let spacesAmount = 2
     for (let i = treeStrLvlsArr.length - 3; i >= 0; i -= 2) {
-        let spacesAmount = getGeometricValue(currGeoPosition, 2);
         treeStrLvlsArr[i] = writeSpaces(spacesAmount) + treeStrLvlsArr[i] + ' ';
         treeStrLvlsArr[i + 1] = writeSpaces(treeStrLvlsArr[i].length + 1);
-        currGeoPosition++;
+        spacesAmount *= 2;
     }
 
     return treeStrLvlsArr;
@@ -133,7 +132,7 @@ function addOuterSpaces(treeStrLvlsArr: string[]) {
 
 function addArrows(treeStrLvlsArr: string[]) {
     const treeMaxDepth = Math.round(treeStrLvlsArr.length / 2);     // because it includes levels for the arrows
-    let startingSpacesAmount = getGeometricValue(treeMaxDepth - 1, 2);
+    let startingSpacesAmount = getGeometricValue(treeMaxDepth - 1, 2);  // so that we don't start searching at the beginning of the string since we know it starts with spaces 
 
     for (let i = 0; i < treeStrLvlsArr.length - 1; i += 2) {
         for (let j = startingSpacesAmount - 1; j < treeStrLvlsArr[i].length; j++) {
