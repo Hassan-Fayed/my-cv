@@ -18,6 +18,11 @@ export default function CanvasShow({ tenValuesImage, pixelLength }: CanvasShowPr
         drawASCIIImage(canvasElementRef.current, imgElementRef.current, pixelLength);
     }, [pixelLength]);
 
+    const handleImgLoad = () => {
+        if (!canvasElementRef.current || !imgElementRef.current) return;
+        drawASCIIImage(canvasElementRef.current, imgElementRef.current, pixelLength);
+    }
+
     return <>
         <canvas
             className="w-[56em] h-[39.2em]"
@@ -39,6 +44,7 @@ export default function CanvasShow({ tenValuesImage, pixelLength }: CanvasShowPr
             src={tenValuesImage}
             alt=""
             priority
+            onLoad={handleImgLoad}
         />
     </>;
 }
