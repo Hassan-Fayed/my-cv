@@ -62,7 +62,7 @@ export default function Hero() {
                         w-1/2
                         text-[1rem]
                         flex flex-col items-start
-                        relative bottom-[8.6rem] z-10
+                        relative bottom-[10.25rem] z-10
                         screen-slg:text-[0.95rem] screen-slg:bottom-[7.35rem]
                         screen-md:text-[0.8rem] screen-md:bottom-[6.7rem]
                         screen-smd:text-[0.7rem] screen-smd:bottom-[8rem]
@@ -141,8 +141,8 @@ export default function Hero() {
                         <div className={`
                             ${pressStart2p.className}
                             text-[1.5em]
-                            text-brand-light
-                            absolute bottom-[5em] right-[6.7em]
+                            text-brand-regular
+                            absolute bottom-[1.1em] right-[6.5em]
                         `}>
                             {scrollPercentage.toString() + '%'}
                         </div>
