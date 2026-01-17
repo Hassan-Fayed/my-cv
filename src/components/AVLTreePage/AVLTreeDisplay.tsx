@@ -1,36 +1,80 @@
 'use client';
 
-import type { MutableRefObject } from "react";
-import type { BSTType } from "@/utils/binarySearchTree";
+import { useRef, useEffect } from "react";
 
-import drawBinaryTree from '@/utils/drawBinaryTree';
+import drawBinaryTree from "@/utils/drawBinaryTree";
+
+import type { MutableRefObject, RefObject } from "react";
+import type { BSTType } from "@/utils/binarySearchTree";
 
 interface AVLTreeDisplayProps {
     bSTRef: MutableRefObject<BSTType | null>;
+    navRef: RefObject<HTMLDivElement>;
 }
 
-export default function AVLTreeDisplay({ bSTRef }: AVLTreeDisplayProps) {
-    let renderedTreeASCIIArr: JSX.Element[] | null = null;
-    if (bSTRef.current) {
-        const treeASCIIArr = drawBinaryTree(bSTRef.current);
+export default function AVLTreeDisplay({ bSTRef, navRef }: AVLTreeDisplayProps) {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
-        renderedTreeASCIIArr = treeASCIIArr.map((lvl, idx) => {
-            return <pre key={idx}>{lvl}</pre>;
-        });
-    }
+    useEffect(() => {
+        initializeCanvasAndCtx(canvasRef, ctxRef, navRef);
 
-    return <div className="
-        pb-[8.899rem] pt-[4rem]  
-    ">
-        <div className="
-            px-[2.168rem] screen-2xs:px-[1rem] 
-            w-max mx-auto
-            text-[1.875rem] font-bold text-brand-dark 
-            screen-s:text-[1.7rem]
-            screen-xs:text-[1.6rem]
-            screen-4xs:text-[1.5rem]
-        ">
-            {renderedTreeASCIIArr}
-        </div>
-    </div>;
+        const resizeHandler = () => {
+            if (!canvasRef.current || !ctxRef.current || !bSTRef.current) return;
+
+            initializeCanvasAndCtx(canvasRef, ctxRef, navRef);
+
+            const maxDepth = bSTRef.current.maxDepth();
+            drawBinaryTree(
+                bSTRef.current.root,    //pNode
+                canvasRef.current,  // canvas
+                ctxRef.current,    // context
+                canvasRef.current.width / 2,    // x
+                maxDepth - 1,    // parent coordinates
+            );
+        };
+        window.addEventListener('resize', resizeHandler);
+
+        return () => window.removeEventListener('resize', resizeHandler);
+    }, [navRef, bSTRef]);
+
+    (function draw(
+        bsTRef: MutableRefObject<BSTType | null>,
+        canvasRef: RefObject<HTMLCanvasElement>,
+        ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+
+    ) {
+        if (!bSTRef.current || !ctxRef.current || !canvasRef.current) return;
+
+        const maxDepth = bSTRef.current.maxDepth();
+        drawBinaryTree(
+            bSTRef.current.root,    //pNode
+            canvasRef.current,  // canvas
+            ctxRef.current,    // context
+            canvasRef.current.width / 2,    // x
+            maxDepth - 1,    // geometric squence position
+        );
+    })(bSTRef, canvasRef, ctxRef);
+
+    return <canvas className='block' ref={canvasRef}></canvas>;
+}
+
+function initializeCanvasAndCtx(
+    canvasRef: RefObject<HTMLCanvasElement>,
+    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+    navRef: RefObject<HTMLDivElement>
+) {
+    if (!canvasRef.current || !navRef.current) return;
+
+    const { height } = getComputedStyle(navRef.current);
+    canvasRef.current.width = window.innerWidth;
+    canvasRef.current.height = window.innerHeight - parseFloat(height);
+
+    ctxRef.current = canvasRef.current.getContext('2d');
+    if (!ctxRef.current) return;
+
+    ctxRef.current.fillStyle = '#001c1e';
+    ctxRef.current.strokeStyle = '#001c1e';
+    ctxRef.current.textAlign = 'center';
+    ctxRef.current.textBaseline = 'middle';
 }

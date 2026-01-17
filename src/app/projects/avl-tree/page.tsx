@@ -1,43 +1,82 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import type { FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 import AVLTreeNav from '@/components/AVLTreePage/AVLTreeNav/AVLTreeNav';
 import AVLTreeDisplay from '@/components/AVLTreePage/AVLTreeDisplay';
+import Modal from '@/components/Modal';
+
+import { useModalContext } from '@/context/modalContext';
 
 import { BST } from '@/utils/binarySearchTree';
 
 export default function AvlTreePage() {
-    const [term, setTerm] = useState('');
-    const [isDelete, setIsDelete] = useState(false);
+    const [, setRerender] = useState(false);
+    const [modalMsg, setModalMsg] = useState('');
+    const { isShowModal, setIsShowModal } = useModalContext();
+
     const bSTRef = useRef<BST | null>(null);
+    const navRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const newBST = new BST();
         bSTRef.current = newBST;
-    }, []);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!isDelete) {
-            bSTRef.current?.add(parseInt(term));
-            setTerm('');
-        } else {
-            bSTRef.current?.delete(parseInt(term));
-            setTerm('');
+        function checkScreenAspectRatio() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const ratio = width / height;
+            if (ratio < 1) {
+                setModalMsg('Please, make the window wider or rotate your screen.');
+                setIsShowModal(true);
+            } else {
+                setModalMsg('');
+                setIsShowModal(false);
+            }
         }
+        checkScreenAspectRatio();
+
+        window.addEventListener('resize', checkScreenAspectRatio);
+
+        return () => window.removeEventListener('resize', checkScreenAspectRatio);
+    }, [setIsShowModal]);
+
+    const handleChange = (term: string, setTerm: Dispatch<SetStateAction<string>>, isDelete: Boolean) => {
+        if (!term || !bSTRef.current) {
+            setTerm('');
+            return;
+        }
+
+        if (!isDelete) {    // add an element to the bST
+            bSTRef.current.add(parseInt(term));
+            const maxDepth = bSTRef.current.maxDepth();
+            if (maxDepth > 5) {
+                bSTRef.current.delete(parseInt(term));
+                setModalMsg('This binary search tree can not have more than 5 levels.');
+                setIsShowModal(true);
+            } else {
+                setModalMsg('');
+                setIsShowModal(false);
+            }
+        } else {    // remove an element from the bST
+            bSTRef.current.delete(parseInt(term));
+        }
+
+        setTerm('');
+
+        setRerender(curr => !curr);
     };
 
-    return <div className="min-h-svh overflow-x-scroll bg-brand-light">
+    return <div className="min-h-svh bg-brand-light overflow-clip">
         <AVLTreeNav
-            term={term}
-            setTerm={setTerm}
-            isDelete={isDelete}
-            setIsDelete={setIsDelete}
-            onSubmit={handleSubmit}
+            onChange={handleChange}
+            navRef={navRef}
+            isShowModal={isShowModal}
         />
-        <AVLTreeDisplay bSTRef={bSTRef} />
+        <AVLTreeDisplay bSTRef={bSTRef} navRef={navRef} />
+
+        <div className="modal-container"></div>
+        <Modal msg={modalMsg} />
     </div>;
 }

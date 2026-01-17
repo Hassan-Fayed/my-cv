@@ -1,6 +1,8 @@
 'use client';
 
-import type { ChangeEvent, Dispatch, SetStateAction, FormEvent } from 'react';
+import { useState } from 'react';
+
+import type { ChangeEvent, Dispatch, SetStateAction, FormEvent, RefObject } from 'react';
 
 import { IoMdArrowDropleft } from "react-icons/io";
 import { Press_Start_2P } from 'next/font/google';
@@ -11,21 +13,27 @@ import Switch from "./Switch";
 const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
 interface AVLTreeProps {
-    term: string;
-    setTerm: Dispatch<SetStateAction<string>>;
-    isDelete: boolean;
-    setIsDelete: Dispatch<SetStateAction<boolean>>;
-    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    onChange: (term: string, setTerm: Dispatch<SetStateAction<string>>, isDelete: Boolean) => void;
+    navRef: RefObject<HTMLDivElement>;
+    isShowModal: boolean;
 }
 
-export default function AVLTreeNav({ term, setTerm, isDelete, setIsDelete, onSubmit }: AVLTreeProps) {
+export default function AVLTreeNav({ onChange, navRef, isShowModal }: AVLTreeProps) {
+    const [isDelete, setIsDelete] = useState(false);
+    const [term, setTerm] = useState('');
+
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);
-    }
+    };
 
-    const inputPlaceHolder = isDelete ? 'Delete a number' : 'Add a number';
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    return <nav className="
+        onChange(term, setTerm, isDelete);
+    };
+
+
+    return <nav ref={navRef} className="
         bg-brand-regular
         h-[4.7rem] w-full
         sticky top-[0] left-[0] z-10
@@ -70,28 +78,29 @@ export default function AVLTreeNav({ term, setTerm, isDelete, setIsDelete, onSub
                 `}>
                     AVL Tree
                 </h1>
-                <form onSubmit={onSubmit} className="
-                    flex gap-[1.25em]
-                ">
-                    <input
-                        max={99}
-                        min={-9}
-                        value={term}
-                        onChange={handleTermChange}
-                        type="number"
-                        placeholder={inputPlaceHolder}
-                        className="
-                            text-[1em]
-                            w-[11.308em]
-                            pl-[0.5rem]
-                            focus:outline-none 
-                            focus:outline-brand-lightMedium
-                            focus:outline-offset-[-1px]
-                            focus:rounded-none
-                            screen-3xs:w-[9.5em]
-                        "
-                    />
-                    <Switch value={isDelete} setValue={setIsDelete} className="text-[1em]" />
+                <form onSubmit={handleSubmit}>
+                    <fieldset disabled={isShowModal} className="flex gap-[1.25em]">
+                        <input
+                            max={99}
+                            min={-9}
+                            value={term}
+                            onChange={handleTermChange}
+                            type="number"
+                            placeholder={isDelete ? 'Delete a number' : 'Add a number'}
+                            className="
+                                text-[1em]
+                                w-[11.308em]
+                                pl-[0.5rem]
+                                focus:outline-none 
+                                focus:outline-brand-lightMedium
+                                focus:outline-offset-[-1px]
+                                focus:rounded-none
+                                screen-3xs:w-[9.5em]
+                                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+                            "
+                        />
+                        <Switch value={isDelete} setValue={setIsDelete} className="text-[1em]" />
+                    </fieldset>
                 </form>
             </div>
         </div>

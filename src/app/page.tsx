@@ -4,11 +4,10 @@ import Hero from '@/components/HomePage/Hero/Hero';
 import Section from '@/components/HomePage/Section';
 import Footer from "@/components/HomePage/Footer/Footer";
 import Modal from '@/components/Modal';
-import { ModalProvider } from '@/context/modalContext';
 
 export default function Home() {
-  return <ModalProvider>
-    <Modal />
+  return <>
+    <Modal msg="I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase." />
     <Hero />
     <Section
       isOpaqueBG={false}
@@ -83,5 +82,5 @@ export default function Home() {
     </div>
     <Footer />
     <div className="modal-container"></div>
-  </ModalProvider>;
+  </>;
 }

@@ -24,7 +24,7 @@ export default function Switch({ value, setValue, className }: RadioPropsType) {
         'before:flex before:justify-center before:items-center',
         'before:text-[1em]',
         'before:absolute before:top-[0] before:left-[0]',
-        'transition-all before:transition-all',
+        'transition-colors before:transition-transform',
         {
             "bg-brand-medium before:content-['Add'] before:text-brand-medium before:border-brand-medium": !value,
             "bg-brand-accent before:content-['Delete'] before:text-brand-accent before:border-brand-accent": value,

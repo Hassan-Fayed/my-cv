@@ -33,10 +33,8 @@ class BSTNode implements BSTNodeType {
 
 class BST implements BSTType {
     #root: BSTNode | null;
-    #traversalArr: number[];
     constructor() {
         this.#root = null;
-        this.#traversalArr = [];
     }
 
     get root() {
@@ -60,46 +58,47 @@ class BST implements BSTType {
         this.#root = this.#addHelper(this.#root, value);
     }
 
-    #preorderHelper(pNode: BSTNode | null) {
-        if (pNode === null) return;
+    preorder(): number[] {
+        const result: number[] = [];
 
-        this.#traversalArr.push(pNode.data);
-        this.#preorderHelper(pNode.left);
-        this.#preorderHelper(pNode.right);
+        (function preorderHelper(pNode: BSTNode | null) {
+            if (pNode === null) return;
+
+            result.push(pNode.data);
+            preorderHelper(pNode.left);
+            preorderHelper(pNode.right);
+        })(this.#root);
+
+
+        return result;
     }
 
-    preorder() {
-        this.#traversalArr = [];
-        this.#preorderHelper(this.#root);
-        return this.#traversalArr;
+    inorder(): number[] {
+        const result: number[] = [];
+
+        (function inorderHelper(pNode: BSTNode | null) {
+            if (pNode === null) return;
+
+            inorderHelper(pNode.left);
+            result.push(pNode.data);
+            inorderHelper(pNode.right);
+        })(this.#root);
+
+        return result;
     }
 
-    #inorderHelper(pNode: BSTNode | null) {
-        if (pNode === null) return;
+    postorder(): number[] {
+        const result = [];
 
-        this.#inorderHelper(pNode.left);
-        this.#traversalArr.push(pNode.data);
-        this.#inorderHelper(pNode.right);
-    }
+        (function postorderHelper(pNode: BSTNode | null) {
+            if (pNode === null) return;
 
-    inorder() {
-        this.#traversalArr = []
-        this.#inorderHelper(this.#root);
-        return this.#traversalArr;
-    }
+            postorderHelper(pNode.left);
+            postorderHelper(pNode.right);
+            result.push(pNode.data);
+        })(this.#root);
 
-    #postorderHelper(pNode: BSTNode | null) {
-        if (pNode === null) return;
-
-        this.#postorderHelper(pNode.left);
-        this.#postorderHelper(pNode.right);
-        this.#traversalArr.push(pNode.data);
-    }
-
-    postorder() {
-        this.#traversalArr = []
-        this.#postorderHelper(this.#root);
-        return this.#traversalArr;
+        return result;
     }
 
     breadthFirstTraversal(): number[] {
@@ -172,13 +171,14 @@ class BST implements BSTType {
             }
         }
 
-        if (pNode !== null)
-            pNode = this.#balance(pNode);
         return pNode;
     }
 
     delete(toBeDel: number) {
         this.#root = this.#deleteHelper(this.#root, toBeDel);
+
+        const inOrderArr = this.inorder();
+        this.#root = this.#constructBalancedTree(inOrderArr);
     }
 
     #maxDepthHelper(pNode: BSTNodeType | null): number {
@@ -234,19 +234,44 @@ class BST implements BSTType {
         const balanceFactor = this.#getBalanceFactor(pNode);
 
         if (balanceFactor > 1) {    // unbalanced and right heavy
-            if (this.#getBalanceFactor(pNode.right as BSTNodeType) > 0)     // also right heavy
+            const rightBalanceFactor = this.#getBalanceFactor(pNode.right as BSTNodeType);
+            if (rightBalanceFactor > 0)     // also right heavy
                 pNode = this.#rotateLeft(pNode);
-            else if (this.#getBalanceFactor(pNode.right as BSTNodeType) < 0)  // left heavy
+            else if (rightBalanceFactor < 0)  // left heavy
                 pNode = this.#rotateRightLeft(pNode);
 
         } else if (balanceFactor < -1) {    // unbalanced and left heavy 
-            if (this.#getBalanceFactor(pNode.left as BSTNodeType) < 0)      // also left heavy
+            const leftBalanceFactor = this.#getBalanceFactor(pNode.left as BSTNodeType);
+            if (leftBalanceFactor < 0)      // also left heavy
                 pNode = this.#rotateRight(pNode);
-            else if (this.#getBalanceFactor(pNode.left as BSTNodeType) > 0) // right heavy
+            else if (leftBalanceFactor > 0) // right heavy
                 pNode = this.#rotateLeftRight(pNode);
         }
 
         return pNode;
+    }
+
+    #constructBalancedTree(inOrderArr: number[]): BSTNode | null {
+        if (inOrderArr.length === 0) return null;
+        if (inOrderArr.length === 1) return new BSTNode(inOrderArr[0]);
+
+        const midIdx = Math.floor(inOrderArr.length / 2);
+        const startIdx = 0;
+        const endIdx = inOrderArr.length - 1;
+
+        function recursiveHelper(startIdx: number, endIdx: number): BSTNode | null {
+            if (startIdx > endIdx) return null;
+
+            const midIdx = Math.floor((startIdx + endIdx) / 2);
+            const pNode = new BSTNode(inOrderArr[midIdx]);
+            pNode.left = recursiveHelper(startIdx, midIdx - 1);
+            pNode.right = recursiveHelper(midIdx + 1, endIdx);
+
+            return pNode;
+        }
+        const root = recursiveHelper(startIdx, endIdx);
+
+        return root;
     }
 }
 

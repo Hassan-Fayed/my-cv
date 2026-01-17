@@ -6,7 +6,11 @@ import { createPortal } from 'react-dom';
 import { IoCloseSharp } from "react-icons/io5";
 import { useModalContext } from "@/context/modalContext";
 
-export default function Modal() {
+interface ModalPropsType {
+    msg: string;
+}
+
+export default function Modal({ msg }: ModalPropsType) {
     const { isShowModal, setIsShowModal } = useModalContext();
     const modalContentRef = useRef<HTMLParagraphElement>(null);
 
@@ -18,7 +22,7 @@ export default function Modal() {
             if (modalContentRef.current && !modalContentRef.current.contains(e.target as HTMLElement))
                 setIsShowModal(false);
         }
-        document.addEventListener('click', handler, true);
+        document.addEventListener('click', handler);
 
         return () => {
             document.body.classList.remove('overflow-hidden');
@@ -59,7 +63,7 @@ export default function Modal() {
                 pt-[1.5em] 
                 pb-[2em]
             ">
-                I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase.
+                {msg}
             </p>
         </div>,
             document.getElementsByClassName('modal-container')[0]
