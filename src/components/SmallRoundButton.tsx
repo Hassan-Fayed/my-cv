@@ -35,7 +35,7 @@ export default function SmallRoundButton({ onClick, disabled, id }: SmallRoundBu
             absolute bottom-[0.5rem] z-10
             group-hover:h-[0.3rem]
             group-active:h-[0rem]
-            ${disabled && 'bg-brand-lightMedium h-[0rem]'}
+            ${disabled && 'h-[0rem] group-hover:h-[0rem]'}
             transition-[height] duration-[0.07s] ease-out
             group-active:duration-[0.01s] group-active:ease-in
         `}></div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import type { ChangeEvent, Dispatch, SetStateAction, MutableRefObject, FormEvent } from "react";
 
 import Button from '@/components/Button';
@@ -23,15 +23,31 @@ export default function TimerUI({
     totalSecondsDuration,
     isFinishedCounting,
 }: CounterUIProp) {
+    const [isInitializing, setIsInitializing] = useState(true);
+
     const intervalAddress = useRef<NodeJS.Timeout | null>(null);
 
-    const tickSoundRef = useRef<HTMLAudioElement | null>(null);
-    if (tickSoundRef.current === null && typeof Audio !== "undefined")
-        tickSoundRef.current = new Audio('/tick.mp3')
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const tickAudioBufferRef = useRef<AudioBuffer | null>(null);
+    const finalTickAudioBufferRef = useRef<AudioBuffer | null>(null);
 
-    const finalTickSoundRef = useRef<HTMLAudioElement | null>(null);
-    if (finalTickSoundRef.current === null && typeof Audio !== "undefined")
-        finalTickSoundRef.current = new Audio('/final-tick.mp3');
+    useEffect(() => {
+        const audioContext = new AudioContext();
+        audioContextRef.current = audioContext;
+
+        (async function () {
+            setIsInitializing(true);
+
+            // so that the two promises run concurrently
+            const promise1 = createAudioBuffer(audioContextRef, tickAudioBufferRef, '/tick.mp3');
+            const promise2 = createAudioBuffer(audioContextRef, finalTickAudioBufferRef, '/final-tick.mp3');
+            await Promise.all([promise1, promise2]);
+
+            setIsInitializing(false);
+        })();
+
+
+    }, []);
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(parseInt(e.target.value) || 0);
@@ -46,10 +62,10 @@ export default function TimerUI({
                 return 0;
             }
 
-            if (currTerm > 1 && tickSoundRef.current)
-                tickSoundRef.current.play();
-            else if (currTerm === 1 && finalTickSoundRef.current)
-                finalTickSoundRef.current.play();
+            if (currTerm > 1)
+                playAudio(tickAudioBufferRef, audioContextRef, 0);
+            else if (currTerm === 1)
+                playAudio(finalTickAudioBufferRef, audioContextRef, 0);
 
             return currTerm - 1;
         });
@@ -118,13 +134,14 @@ export default function TimerUI({
             />
             <fieldset className="flex gap-[1em]">
                 <Button regular
-                    disabled={isCounting}
+                    disabled={isInitializing || isCounting}
                     onClick={handleStartClick}
                     className="text-[1em]"
                 >
                     Start
                 </Button>
                 <Button danger
+                    disabled={isInitializing}
                     onClick={handleStopClick}
                     className="text-[1em]"
                 >
@@ -134,11 +151,37 @@ export default function TimerUI({
             <fieldset className="flex flex-col items-center gap-[0.15rem] font-medium">
                 <SmallRoundButton
                     id="reset"
-                    disabled={isCounting}
+                    disabled={isInitializing || isCounting}
                     onClick={handleResetClick}
                 />
                 <label htmlFor="reset" className="text-[1em] text-brand-dark">Reset</label>
             </fieldset>
         </div>
     </form>;
+}
+
+async function createAudioBuffer(
+    audioContextRef: MutableRefObject<AudioContext | null>,
+    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    path: string
+) {
+    if (!audioContextRef.current) return;
+
+    const response = await fetch(path);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
+    audioBufferRef.current = audioBuffer;
+}
+
+function playAudio(
+    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    audioContextRef: MutableRefObject<AudioContext | null>,
+    time: number,
+) {
+    if (!audioContextRef.current || !audioBufferRef.current) return;
+
+    const bufferSource = audioContextRef.current.createBufferSource();
+    bufferSource.buffer = audioBufferRef.current;
+    bufferSource.connect(audioContextRef.current.destination);
+    bufferSource.start(time);
 }
