@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef } from "react";
+import type { MutableRefObject } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import Button from "../Button";
 import HPBar from "./HPBar";
@@ -16,11 +17,21 @@ interface PokeControlsPropsType {
 export default function PokeControls({ position }: PokeControlsPropsType) {
     const { leftPokemon, setLeftPokemon, rightPokemon, setRightPokemon } = usePokemonContext();
 
-    const attackSound = useRef<HTMLAudioElement | null>(null);
-    if (attackSound.current === null && typeof Audio !== 'undefined') {
-        attackSound.current = new Audio('/attack.mp3');
-        attackSound.current.volume = 0.5;
-    }
+    const [isInitializing, setIsInitializing] = useState(true);
+
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const attackAudioBufferRef = useRef<AudioBuffer | null>(null);
+
+    useEffect(() => {
+        const audioContext = new AudioContext();
+        audioContextRef.current = audioContext;
+
+        (async function () {
+            setIsInitializing(true);
+            await createAudioBuffer(audioContextRef, attackAudioBufferRef, '/attack.mp3');
+            setIsInitializing(false);
+        })();
+    }, []);
 
 
     const { pokemon, setPokemon } = position === 'left' ?
@@ -32,7 +43,7 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
         { opponentPokemon: leftPokemon, setOpponentPokemon: setLeftPokemon };
 
     const handleAttackClick = () => {
-        attackSound.current?.play();
+        playAudio(attackAudioBufferRef, audioContextRef, 0);
         setOpponentPokemon((currOpponentPoke) => {
             if (currOpponentPoke)
                 return {
@@ -53,7 +64,7 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
                 <HPBar total={pokemon.hp} current={pokemon.currHp} />
                 <Button
                     danger
-                    disabled={!opponentPokemon}
+                    disabled={isInitializing || !opponentPokemon}
                     className="self-end mt-[0.2em]"
                     onClick={handleAttackClick}
                     fontSize="text-[0.75rem]"
@@ -63,4 +74,35 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
             </div>
         }
     </>;
+}
+
+async function createAudioBuffer(
+    audioContextRef: MutableRefObject<AudioContext | null>,
+    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    path: string
+) {
+    if (!audioContextRef.current) return;
+
+    const response = await fetch(path);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
+    audioBufferRef.current = audioBuffer;
+}
+
+function playAudio(
+    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    audioContextRef: MutableRefObject<AudioContext | null>,
+    time: number
+) {
+    if (!audioContextRef.current || !audioBufferRef.current) return;
+
+    const bufferSource = audioContextRef.current.createBufferSource();
+    bufferSource.buffer = audioBufferRef.current;
+
+    const volume = audioContextRef.current.createGain();
+    volume.gain.value = 0.5;
+
+    bufferSource.connect(volume);
+    volume.connect(audioContextRef.current.destination);
+    bufferSource.start(time);
 }

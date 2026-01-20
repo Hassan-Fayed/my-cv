@@ -13,7 +13,7 @@ interface PokeShowProps {
 export default function PokeShow({ position, className }: PokeShowProps) {
     const { leftPokemon, rightPokemon } = usePokemonContext();
 
-    const { pokemon } = position === 'left' ? { pokemon: leftPokemon } : { pokemon: rightPokemon };
+    const pokemon = position === 'left' ? leftPokemon : rightPokemon;
 
     return <div className={`
         relative z-0
