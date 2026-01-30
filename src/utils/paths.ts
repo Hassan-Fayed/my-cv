@@ -19,7 +19,10 @@ const paths = {
     },
     comments() {
         return '/projects/comments';
-    }
+    },
+    particlesSystem() {
+        return '/projects/particles-system';
+    },
 };
 
 export default paths;

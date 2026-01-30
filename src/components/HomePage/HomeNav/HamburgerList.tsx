@@ -73,6 +73,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.timer()}>Timer</Link></li>
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.pokeFight()}>PokéFight</Link></li>
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.toDo()}>To do</Link></li>
+                    <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.particlesSystem()}>Particles</Link></li>
                     <li className="hover:font-bold hover:text-brand-dark transition-all"><Link href={paths.comments()}>Comments</Link></li>
                 </ul>}
             </li>

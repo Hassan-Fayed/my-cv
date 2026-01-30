@@ -72,6 +72,7 @@ export default function HomeNavBar() {
                             { title: 'Timer', link: paths.timer() },
                             { title: 'PokéFight', link: paths.pokeFight() },
                             { title: 'To do', link: paths.toDo() },
+                            { title: 'Particles', link: paths.particlesSystem() },
                             { title: 'Comments', link: paths.comments() },
                         ]}
                     />
