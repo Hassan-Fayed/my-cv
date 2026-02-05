@@ -7,7 +7,6 @@ import Modal from '@/components/Modal';
 
 export default function Home() {
   return <>
-    <Modal msg="I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase." />
     <Hero />
     <Section
       isOpaqueBG={false}
@@ -81,6 +80,6 @@ export default function Home() {
       />
     </div>
     <Footer />
-    <div className="modal-container"></div>
+    <Modal />
   </>;
 }

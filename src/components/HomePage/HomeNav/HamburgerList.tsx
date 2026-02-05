@@ -20,23 +20,24 @@ interface HamburgerListPropsType {
 export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonRef }: HamburgerListPropsType) {
     const [isShowProjectsList, setIsShowProjectsList] = useState(false);
     const listRef = useRef<HTMLDivElement>(null);
-    const { setIsShowModal } = useModalContext();
+    const { setIsShowModal, setModalMsg } = useModalContext();
 
     useEffect(() => {
         const clickHandler = (e: MouseEvent) => {
             if (
                 listRef.current && hamburgerButtonRef.current &&
-                !listRef.current.contains(e.target as HTMLElement) &&
-                !hamburgerButtonRef.current.contains(e.target as HTMLElement)
+                e.target instanceof HTMLElement &&
+                !listRef.current.contains(e.target) &&
+                !hamburgerButtonRef.current.contains(e.target)
             )
                 setIsShowHamburgerList(false);
         };
-        document.addEventListener('click', clickHandler, true);
+        document.addEventListener('click', clickHandler);
 
         const scrollHandler = () => {
             setIsShowHamburgerList(false);
         }
-        document.addEventListener('scroll', scrollHandler, true);
+        document.addEventListener('scroll', scrollHandler);
 
         return () => {
             document.removeEventListener('click', clickHandler);
@@ -51,8 +52,9 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
     };
 
     const handleAboutClick = () => {
-        setIsShowModal(true);
         setIsShowHamburgerList(false);
+        setModalMsg('I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase.');
+        setIsShowModal(true);
     };
 
     return <div ref={listRef} className="

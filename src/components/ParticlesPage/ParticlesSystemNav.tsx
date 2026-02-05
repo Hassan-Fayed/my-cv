@@ -3,6 +3,8 @@
 import type { ChangeEvent, MutableRefObject, FormEvent, RefObject } from 'react';
 import { useState, useEffect, useRef } from 'react';
 
+import { useModalContext } from '@/context/modalContext';
+
 import { IoMdArrowDropleft } from "react-icons/io";
 import { Press_Start_2P } from 'next/font/google';
 
@@ -29,13 +31,22 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
     const audioContextRef = useRef<AudioContext | null>(null);
     const collisionAudioBufferRef = useRef<AudioBuffer | null>(null);
 
+    const { isShowModal, setIsShowModal, modalMsg, setModalMsg } = useModalContext();
+
     useEffect(() => {
+        setModalMsg('Please, enter a diameter between 20px and 70px.');
+        setIsShowModal(true);
+
         const pxlBallImgEl = getPxlBallImgEl();
         const imgLoadHandler = () => setIsInitialized(true);
         pxlBallImgEl.addEventListener('load', imgLoadHandler);
 
-        return () => pxlBallImgEl.removeEventListener('load', imgLoadHandler);
-    }, []);
+        return () => {
+            pxlBallImgEl.removeEventListener('load', imgLoadHandler);
+            setIsShowModal(false);
+            setModalMsg('');
+        };
+    }, [setModalMsg, setIsShowModal]);
 
     const getPxlBallImgEl = () => {
         if (!pxlBallImgElRef.current) {
@@ -148,7 +159,7 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
                         absolute top-[4.7rem] left-0
                         w-[2.9em] h-[2.9em] rounded-[50%]
                         flex justify-center items-center
-                        text-brand-light bg-brand-dark
+                        text-brand-darkLight bg-brand-dark
                         hover:text-brand-dark hover:bg-brand-lightMedium
                     " />
                 </div>

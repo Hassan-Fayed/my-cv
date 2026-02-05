@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import type Particle from '@/utils/particlesSystem/particles';
 import ParticlesSystemNav from '@/components/ParticlesPage/ParticlesSystemNav';
 const DynamicFullPageCanvas = dynamic(() => import('@/components/ParticlesPage/FullPageCanvas'), { ssr: false });
+import Modal from '@/components/Modal';
 
 export default function ParticlesPage() {
     const navRef = useRef<HTMLDivElement>(null);
@@ -26,5 +27,6 @@ export default function ParticlesPage() {
             navRef={navRef}
             particlesArrRef={particlesArrRef}
         />
+        <Modal />
     </div>;
 }

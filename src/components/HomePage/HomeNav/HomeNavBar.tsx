@@ -18,11 +18,12 @@ import { useModalContext } from '@/context/modalContext';
 const pressStart2p = Press_Start_2P({ weight: '400', subsets: ["latin"] });
 
 export default function HomeNavBar() {
-    const { setIsShowModal } = useModalContext();
+    const { setIsShowModal, setModalMsg } = useModalContext();
     const [isShowHamburgerList, setIsShowHamburgerList] = useState(false);
     const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
 
     const handleAboutClick = () => {
+        setModalMsg('I created this project to showcase my React and Nextjs skills. I used Nextjs, Tailwindcss, Classnames, React Icons, and Firebase.');
         setIsShowModal(true);
     };
 

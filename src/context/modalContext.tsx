@@ -5,7 +5,9 @@ import type { Dispatch, SetStateAction } from "react";
 
 interface ModalContextValueType {
     isShowModal: boolean;
-    setIsShowModal: Dispatch<SetStateAction<boolean>>
+    setIsShowModal: Dispatch<SetStateAction<boolean>>;
+    modalMsg: string;
+    setModalMsg: Dispatch<SetStateAction<string>>;
 }
 
 interface ModalProviderPropsType {
@@ -16,8 +18,9 @@ const ModalContext = createContext<ModalContextValueType | null>(null);
 
 function ModalProvider({ children }: ModalProviderPropsType) {
     const [isShowModal, setIsShowModal] = useState(false);
+    const [modalMsg, setModalMsg] = useState('');
 
-    const value = { isShowModal, setIsShowModal };
+    const value = { isShowModal, setIsShowModal, modalMsg, setModalMsg };
 
     return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 }

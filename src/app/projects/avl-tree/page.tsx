@@ -13,8 +13,7 @@ import { BST } from '@/utils/binarySearchTree';
 
 export default function AvlTreePage() {
     const [, setRerender] = useState(false);
-    const [modalMsg, setModalMsg] = useState('');
-    const { isShowModal, setIsShowModal } = useModalContext();
+    const { isShowModal, setIsShowModal, modalMsg, setModalMsg } = useModalContext();
 
     const bSTRef = useRef<BST | null>(null);
     const navRef = useRef<HTMLDivElement>(null);
@@ -31,8 +30,8 @@ export default function AvlTreePage() {
                 setModalMsg('Please, make the window wider or rotate your screen.');
                 setIsShowModal(true);
             } else {
-                setModalMsg('');
                 setIsShowModal(false);
+                setModalMsg('');
             }
         }
         checkScreenAspectRatio();
@@ -40,7 +39,7 @@ export default function AvlTreePage() {
         window.addEventListener('resize', checkScreenAspectRatio);
 
         return () => window.removeEventListener('resize', checkScreenAspectRatio);
-    }, [setIsShowModal]);
+    }, [setIsShowModal, setModalMsg]);
 
     const handleChange = (term: string, setTerm: Dispatch<SetStateAction<string>>, isDelete: Boolean) => {
         if (!term || !bSTRef.current) {
@@ -56,8 +55,8 @@ export default function AvlTreePage() {
                 setModalMsg('This binary search tree can not have more than 5 levels.');
                 setIsShowModal(true);
             } else {
-                setModalMsg('');
                 setIsShowModal(false);
+                setModalMsg('');
             }
         } else {    // remove an element from the bST
             bSTRef.current.delete(parseInt(term));
@@ -75,8 +74,6 @@ export default function AvlTreePage() {
             isShowModal={isShowModal}
         />
         <AVLTreeDisplay bSTRef={bSTRef} navRef={navRef} />
-
-        <div className="modal-container"></div>
-        <Modal msg={modalMsg} />
+        <Modal />
     </div>;
 }
