@@ -2,25 +2,34 @@
 
 import { useState } from 'react';
 
-import type { ChangeEvent, Dispatch, SetStateAction, FormEvent, RefObject } from 'react';
+import type { ChangeEvent, RefObject, MutableRefObject, FormEvent } from 'react';
+import type { BSTType } from '@/utils/binarySearchTree';
 
 import { IoMdArrowDropleft } from "react-icons/io";
 import { Press_Start_2P } from 'next/font/google';
 
+import { useModalContext } from '@/context/modalContext';
+
 import IconLink from "@/components/IconLink";
 import Switch from "./Switch";
+import drawBinaryTree from '@/utils/avlTree/drawBinaryTree';
 
 const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
-interface AVLTreeProps {
-    onChange: (term: string, setTerm: Dispatch<SetStateAction<string>>, isDelete: Boolean) => void;
+interface AVLTreeNavProps {
+    canvasRef: RefObject<HTMLCanvasElement>;
+    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>;
     navRef: RefObject<HTMLDivElement>;
-    isShowModal: boolean;
+    getBST: () => BSTType;
+    ballImgElRef: MutableRefObject<HTMLImageElement | null>;
+    isImgLoaded: boolean;
 }
 
-export default function AVLTreeNav({ onChange, navRef, isShowModal }: AVLTreeProps) {
+export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgElRef, isImgLoaded }: AVLTreeNavProps) {
     const [isDelete, setIsDelete] = useState(false);
     const [term, setTerm] = useState('');
+
+    const { isShowModal, setIsShowModal, setModalMsg } = useModalContext();
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);
@@ -28,8 +37,37 @@ export default function AVLTreeNav({ onChange, navRef, isShowModal }: AVLTreePro
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!term || !canvasRef.current || !ctxRef.current || !ballImgElRef.current) {
+            setTerm('');
+            return;
+        }
 
-        onChange(term, setTerm, isDelete);
+        const bST = getBST();
+        if (!isDelete) {    // add an element to the bST
+            bST.add(parseInt(term));
+            const maxDepth = bST.maxDepth();
+            if (maxDepth > 5) {
+                bST.delete(parseInt(term));
+                setModalMsg('This binary search tree can not have more than 5 levels.');
+                setIsShowModal(true);
+            } else {
+                setIsShowModal(false);
+                setModalMsg('');
+            }
+        } else {    // remove an element from the bST
+            bST.delete(parseInt(term));
+        }
+
+        setTerm('');
+
+        drawBinaryTree(
+            bST.root,
+            canvasRef.current,
+            ctxRef.current,
+            ballImgElRef.current,
+            canvasRef.current.width / 2,
+            bST.maxDepth() - 1
+        );
     };
 
 
@@ -79,7 +117,7 @@ export default function AVLTreeNav({ onChange, navRef, isShowModal }: AVLTreePro
                     AVL Tree
                 </h1>
                 <form onSubmit={handleSubmit}>
-                    <fieldset disabled={isShowModal} className="flex gap-[1.25em]">
+                    <fieldset disabled={!isImgLoaded || isShowModal} className="flex gap-[1.25em]" >
                         <input
                             max={99}
                             min={-9}

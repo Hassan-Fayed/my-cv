@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 import AVLTreeNav from '@/components/AVLTreePage/AVLTreeNav/AVLTreeNav';
 import AVLTreeDisplay from '@/components/AVLTreePage/AVLTreeDisplay';
@@ -10,18 +9,27 @@ import Modal from '@/components/Modal';
 import { useModalContext } from '@/context/modalContext';
 
 import { BST } from '@/utils/binarySearchTree';
+import pixelBall from '../../../../public/pixelBall.png';
 
 export default function AvlTreePage() {
-    const [, setRerender] = useState(false);
-    const { isShowModal, setIsShowModal, modalMsg, setModalMsg } = useModalContext();
+    const { setIsShowModal, setModalMsg } = useModalContext();
+    const [isImgLoaded, setIsImgLoaded] = useState(false);
 
     const bSTRef = useRef<BST | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const navRef = useRef<HTMLDivElement>(null);
+    const ballImgElRef = useRef<HTMLImageElement | null>(null);
 
     useEffect(() => {
-        const newBST = new BST();
-        bSTRef.current = newBST;
+        const imgEl = new Image();
+        imgEl.src = pixelBall.src;
+        ballImgElRef.current = imgEl;
 
+        imgEl.addEventListener('load', () => setIsImgLoaded(true), { once: true });
+    }, []);
+
+    useEffect(() => {
         function checkScreenAspectRatio() {
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -41,39 +49,31 @@ export default function AvlTreePage() {
         return () => window.removeEventListener('resize', checkScreenAspectRatio);
     }, [setIsShowModal, setModalMsg]);
 
-    const handleChange = (term: string, setTerm: Dispatch<SetStateAction<string>>, isDelete: Boolean) => {
-        if (!term || !bSTRef.current) {
-            setTerm('');
-            return;
+
+    const getBST = useCallback(() => {
+        if (!bSTRef.current) {
+            const newBST = new BST();
+            bSTRef.current = newBST;
         }
-
-        if (!isDelete) {    // add an element to the bST
-            bSTRef.current.add(parseInt(term));
-            const maxDepth = bSTRef.current.maxDepth();
-            if (maxDepth > 5) {
-                bSTRef.current.delete(parseInt(term));
-                setModalMsg('This binary search tree can not have more than 5 levels.');
-                setIsShowModal(true);
-            } else {
-                setIsShowModal(false);
-                setModalMsg('');
-            }
-        } else {    // remove an element from the bST
-            bSTRef.current.delete(parseInt(term));
-        }
-
-        setTerm('');
-
-        setRerender(curr => !curr);
-    };
+        return bSTRef.current;
+    }, []);
 
     return <div className="min-h-svh bg-brand-light overflow-clip">
         <AVLTreeNav
-            onChange={handleChange}
+            canvasRef={canvasRef}
+            ctxRef={ctxRef}
             navRef={navRef}
-            isShowModal={isShowModal}
+            getBST={getBST}
+            ballImgElRef={ballImgElRef}
+            isImgLoaded={isImgLoaded}
         />
-        <AVLTreeDisplay bSTRef={bSTRef} navRef={navRef} />
+        <AVLTreeDisplay
+            getBST={getBST}
+            canvasRef={canvasRef}
+            ctxRef={ctxRef}
+            navRef={navRef}
+            ballImgElRef={ballImgElRef}
+        />
         <Modal />
     </div>;
 }

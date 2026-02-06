@@ -1,5 +1,5 @@
-import { Queue } from "./queue";
-import type { BSTType, BSTNodeType } from "./binarySearchTree";
+import { Queue } from "../queue";
+import type { BSTType, BSTNodeType } from "../binarySearchTree";
 
 function getGeometricSum(position: number, initialVal = 1, ratio = 2) {
     return (initialVal * (1 - Math.pow(ratio, position))) / (1 - ratio);
