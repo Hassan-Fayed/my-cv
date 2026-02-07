@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaBehance } from "react-icons/fa6";
 import { FaBars } from "react-icons/fa";
+import classNames from 'classnames';
 
 import IconLink from '@/components/IconLink';
 import NavLink from './NavLink';
@@ -17,7 +18,11 @@ import { useModalContext } from '@/context/modalContext';
 
 const pressStart2p = Press_Start_2P({ weight: '400', subsets: ["latin"] });
 
-export default function HomeNavBar() {
+interface HomeNavBarProps {
+    className?: string;
+}
+
+export default function HomeNavBar({ className }: HomeNavBarProps) {
     const { setIsShowModal, setModalMsg } = useModalContext();
     const [isShowHamburgerList, setIsShowHamburgerList] = useState(false);
     const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
@@ -33,18 +38,16 @@ export default function HomeNavBar() {
         });
     };
 
-    return <nav id="top" className="
-        min-h-[3.7rem]
-        flex 
-        justify-center 
-        bg-brand-light 
-        sticky
-        top-[0]
-        left-[0]
-        z-[10]
-        px-11
-        screen-2xs:px-6
-    ">
+    const navClassName = classNames(
+        'min-h-[3.7rem] bg-brand-light',
+        'px-11 screen-2xs:px-6',
+        'flex justify-center',
+        {
+            [className || '']: className,
+        }
+    );
+
+    return <nav id="top" className={navClassName}>
         <div className="w-full max-w-container-width flex h-fill justify-between relative z-10">
             <ul className="flex gap-16 screen-md:gap-12">
                 <li className={`
