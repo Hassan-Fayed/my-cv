@@ -30,7 +30,7 @@ export async function addComment(
         return { message: 'Error: 403 UNAUTHORIZED!' };
 
     // check anti-csrf token validity
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const isValidAntiCSRFToken = await checkAntiCSRFTokenValidity(antiCSRFToken, cookieStore);
     if (!isValidAntiCSRFToken)
         return { message: 'Error: 403 UNAUTHORIZED!' };
@@ -76,7 +76,7 @@ export async function deleteComment(
     formData: FormData
 ) {
     // check anti-csrf token validity
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const isValidAntiCSRFToken = await checkAntiCSRFTokenValidity(antiCSRFToken, cookieStore);
     if (!isValidAntiCSRFToken)
         return { message: '403 UNAUTHORIZED!' };
@@ -106,7 +106,7 @@ export async function editComment(
     formData: FormData
 ) {
     // check anti-csrf token validity
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const isValidAntiCSRFToken = await checkAntiCSRFTokenValidity(antiCSRFToken, cookieStore);
     if (!isValidAntiCSRFToken)
         return { message: '403 UNAUTHORIZED!' };
@@ -148,7 +148,7 @@ export interface signInReturnValue {
 }
 
 export async function signIn(antiCSRFToken: string): Promise<signInReturnValue> {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     //check if there is a user session
     const currSessionCookie = cookieStore.get('sessionCookie')?.value;

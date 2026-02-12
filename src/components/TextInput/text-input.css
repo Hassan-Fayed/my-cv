@@ -1,5 +1,19 @@
-label:has(+ input.dynamic-label-input:focus) {
+@layer components {
+  /* styling the label of the input with class .dynamic-label-input */
+  label:has(+ input.dynamic-label-input) {
+    transform: translate(0.55em, 1.46em);
+    color: var(--color-brand-regular);
+    transition: transform var(--default-transition-duration) ease-out;
+    font-size: max(1.5em, 1rem);
+  }
+
+  label:has(+ input.dynamic-label-input:focus) {
     transform: translate(0, 0);
-    color: #488577;
+    color: var(--color-brand-lightMedium);
     font-weight: 500;
+  }
+
+  label:has(+ input.dynamic-label-input:not(:placeholder-shown)) {
+    transform: translate(0, 0);
+  }
 }

@@ -14,7 +14,7 @@ import { useModalContext } from "@/context/modalContext";
 
 interface HamburgerListPropsType {
     setIsShowHamburgerList: Dispatch<SetStateAction<boolean>>;
-    hamburgerButtonRef: RefObject<HTMLButtonElement>;
+    hamburgerButtonRef: RefObject<HTMLButtonElement | null>;
 }
 
 export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonRef }: HamburgerListPropsType) {
@@ -62,7 +62,7 @@ export default function HamburgerList({ setIsShowHamburgerList, hamburgerButtonR
         w-full box-border py-5
         animate-openDropdownList
         hidden
-        screen-s:block
+        max-screen-s:block
     ">
         <ul className="mx-5 flex flex-col gap-[0.25rem] font-bold text-brand-lightMedium max-w-container-width">
             <li className="flex flex-col items-start gap-[0.12rem]">

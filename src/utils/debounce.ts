@@ -1,6 +1,6 @@
-import type { MutableRefObject } from "react";
+import type { RefObject } from "react";
 
-export default function debounce(func: () => void, timeoutIdRef: MutableRefObject<NodeJS.Timeout | null>) {
+export default function debounce(func: () => void, timeoutIdRef: RefObject<NodeJS.Timeout | null>) {
     return () => {
         if (timeoutIdRef.current) {
             clearTimeout(timeoutIdRef.current);

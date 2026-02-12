@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { Press_Start_2P } from 'next/font/google';
 import { FaGithub } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaBehance } from "react-icons/fa6";
@@ -15,8 +14,7 @@ import NavDropdown from './NavDropdown';
 import HamburgerList from './HamburgerList';
 import paths from '@/utils/paths';
 import { useModalContext } from '@/context/modalContext';
-
-const pressStart2p = Press_Start_2P({ weight: '400', subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface HomeNavBarProps {
     className?: string;
@@ -40,18 +38,18 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
 
     const navClassName = classNames(
         'min-h-[3.7rem] bg-brand-light',
-        'px-11 screen-2xs:px-6',
+        'px-11 max-screen-2xs:px-6',
         'flex justify-center',
         {
             [className || '']: className,
         }
     );
 
-    return <nav id="top" className={navClassName}>
+    return <nav className={navClassName}>
         <div className="w-full max-w-container-width flex h-fill justify-between relative z-10">
-            <ul className="flex gap-16 screen-md:gap-12">
+            <ul className="flex gap-16 max-screen-md:gap-12">
                 <li className={`
-                    ${pressStart2p.className} 
+                    ${pressStart2pFont.className} 
                     flex self-stretch 
                     bg-brand-dark 
                     px-2
@@ -68,7 +66,7 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
                         HF
                     </Link>
                 </li>
-                <li className="flex relative screen-s:hidden">
+                <li className="flex relative max-screen-s:hidden">
                     <NavDropdown
                         title="Projects"
                         dropdownList={[
@@ -81,15 +79,15 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
                         ]}
                     />
                 </li>
-                <li onClick={handleAboutClick} className="flex relative screen-s:hidden">
+                <li onClick={handleAboutClick} className="flex relative max-screen-s:hidden">
                     <NavLink to="" >About</NavLink>
                 </li>
-                <li className="flex relative screen-s:hidden">
+                <li className="flex relative max-screen-s:hidden">
                     <NavLink to={paths.contactInfo()} >Contact Info</NavLink>
                 </li>
             </ul>
             <ul className="flex items-center gap-4">
-                <li className="screen-s:hidden">
+                <li className="max-screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -102,7 +100,7 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
                         <FaGithub />
                     </IconLink>
                 </li>
-                <li className="screen-s:hidden">
+                <li className="max-screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -115,7 +113,7 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
                         <FaLinkedinIn />
                     </IconLink>
                 </li>
-                <li className="screen-s:hidden">
+                <li className="max-screen-s:hidden">
                     <IconLink
                         isLinkingOutside
                         color="text-brand-lightMedium"
@@ -128,7 +126,7 @@ export default function HomeNavBar({ className }: HomeNavBarProps) {
                         <FaBehance className="relative top-[0.0375rem] left-[0.0375rem]" />
                     </IconLink>
                 </li>
-                <li className="hidden screen-s:list-item">
+                <li className="hidden max-screen-s:list-item">
                     <button
                         ref={hamburgerButtonRef}
                         onClick={handleHamburgerClick}

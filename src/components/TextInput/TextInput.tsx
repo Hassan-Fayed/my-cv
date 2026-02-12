@@ -2,14 +2,14 @@
 
 import './text-input.css';
 
-import type { ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, SubmitEvent } from "react";
 
 import classNames from "classnames";
 
 interface TextInputType {
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    onSubmit: (e: SubmitEvent<HTMLFormElement>) => void;
     labelText: string;
     inputFieldWidth: string;
     inputUniqueId: string;
@@ -27,15 +27,18 @@ export default function TextInput({
     inputFieldWidth,
     inputUniqueId,
     parentFontSize,
-    className = '',
-    parentFormClassName = '',
+    className,
+    parentFormClassName,
     maxLength,
 }: TextInputType) {
-    const labelClassName = classNames('transition-transform text-[max(1.5em,1rem)]',
-        {
-            'translate-x-[0.55em] translate-y-[1.45em] text-brand-regular': value.length <= 0,
-            'translate-x-[0] translate-y-[0] text-brand-lightMedium font-medium': value.length > 0,
-        }
+    const inputClassName = classNames(
+        'dynamic-label-input',
+        'bg-[#FFF]',
+        'w-full',
+        'text-[max(1.5em,1rem)] text-brand-dark',
+        'pl-[0.5em] leading-[0]',
+        'outline-none border-2 border-brand-regular focus:border-brand-lightMedium',
+        { [className || '']: className }
     );
 
     return <form onSubmit={onSubmit} className={`
@@ -43,25 +46,17 @@ export default function TextInput({
         ${inputFieldWidth}
         flex flex-col items-start 
         relative
-        ${parentFormClassName}
+        ${parentFormClassName ? parentFormClassName : ''}
     `}>
-        <label className={labelClassName} htmlFor={inputUniqueId}>{labelText}</label>
+        <label htmlFor={inputUniqueId}>{labelText}</label>
         <input
+            placeholder=" "
             maxLength={maxLength}
             id={inputUniqueId}
             value={value}
             onChange={onChange}
             type="text"
-            className={`
-                dynamic-label-input
-                w-full
-                border border-brand-regular
-                text-[max(1.5em,1rem)] text-brand-dark
-                pl-[0.5em] leading-[0]
-                focus:outline-none focus:outline-brand-lightMedium
-                focus:outline-offset-[-1px] focus:rounded-none
-                ${className}
-            `}
+            className={inputClassName}
         />
     </form>;
 }

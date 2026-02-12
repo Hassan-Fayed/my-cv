@@ -29,7 +29,7 @@ async function signUp(): Promise<signInReturnValue> {
             secure: true,
             sameSite: 'strict' as const,
         };
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         cookieStore.set(options);
 
         auth.signOut();
@@ -55,7 +55,7 @@ async function checkAntiCSRFTokenValidity(antiCSRFToken: string, cookieStore: Re
 }
 
 async function checkCurrUser(): Promise<DecodedIdToken | null> {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const currSessionCookie = cookieStore.get('sessionCookie')?.value;
 
     if (currSessionCookie) {

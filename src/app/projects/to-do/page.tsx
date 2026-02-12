@@ -6,9 +6,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import GeneralNav from "@/components/GeneralNav";
 import TextInput from '@/components/TextInput/TextInput';
 import TaskShow from '@/components/ToDoPage/TaskShow';
-
-import { Press_Start_2P } from 'next/font/google';
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface ToDo {
     id: string;
@@ -74,9 +72,9 @@ export default function ToDoPage() {
             text-[1rem]
             max-w-container-width w-full mx-auto
             pt-9 pb-[4.5rem] px-[2.168rem]
-            screen-xs:text-[0.9rem]
-            screen-2xs:text-[0.8rem]
-            screen-3xs:text-[0.7rem]
+            max-screen-xs:text-[0.9rem]
+            max-screen-2xs:text-[0.8rem]
+            max-screen-3xs:text-[0.7rem]
         ">
             <TextInput
                 labelText="Enter a new task"
@@ -85,16 +83,16 @@ export default function ToDoPage() {
                 onChange={handleTermChange}
                 inputFieldWidth="
                     w-[61.805%]
-                    screen-xs:w-full
+                    max-screen-xs:w-full
                 "
                 inputUniqueId="task-input"
                 parentFontSize="
                     text-[1rem] 
-                    screen-xs:text-[0.8rem]
+                    max-screen-xs:text-[0.8rem]
                 "
             />
             <h2 className={`
-                ${pressStart2p.className}
+                ${pressStart2pFont.className}
                 text-brand-dark
                 text-[1.618em]
                 mt-16 mb-10
@@ -103,7 +101,7 @@ export default function ToDoPage() {
             </h2>
             <ul className="
                 text-[1rem]
-                screen-xs:text-[0.8rem]
+                max-screen-xs:text-[0.8rem]
             ">
                 {renderedTodoArr}
             </ul>

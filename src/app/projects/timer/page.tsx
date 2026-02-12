@@ -9,9 +9,9 @@ export default function CounterPage() {
             min-h-general-container-height 
             flex justify-center items-center
             text-[1rem]
-            screen-2xs:text-[0.84rem]
-            screen-3xs:text-[0.76rem]
-            screen-4xs:text-[0.64rem]
+            max-screen-2xs:text-[0.84rem]
+            max-screen-3xs:text-[0.76rem]
+            max-screen-4xs:text-[0.64rem]
         ">
             <Timer className="w-max leading-none" />
         </main>

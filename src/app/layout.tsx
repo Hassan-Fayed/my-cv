@@ -6,7 +6,7 @@ import { ModalProvider } from "@/context/modalContext";
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Hassan Fayed's CV",
+  title: "Hassan Fayed",
   description: "A project I created to showcase my skills.",
 };
 

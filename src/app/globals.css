@@ -2,7 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "tailwindcss";
+
+@theme {
+    --color-brand-extraLight: #f7fff2;
+    --color-brand-light: #ebfce1;
+    --color-brand-darkLight: #cbeab9;
+    --color-brand-regular: #88c070; 
+    --color-brand-darkRegular: #6fb14c;
+    --color-brand-darkerRegular: #67a148;
+    --color-brand-lightMedium: #488577;
+    --color-brand-medium: #37655b;
+    --color-brand-darkMedium: #285047;
+    --color-brand-dark: #001c1e;
+    --color-brand-extraDark: #001314;
+    --color-brand-accent: #f0184a;
+    --color-brand-darkAccent: #ca013e;
+    --color-brand-accent2: #fcf451;
+    --color-brand-neutral: #76948e;
+    --color-brand-transparent-gray: rgba(55, 101, 91, 0.618);
+
+    --backgroundImage-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+    --backgroundImage-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+
+    --spacing-container-width: 70rem;
+    --spacing-projects-container-width: 92rem;
+    --spacing-general-container-height: calc(100svh - 4.7rem);
+    --spacing-small-container-width: 43rem;
+
+    --boxShadow-brand-xl: 0 20px 25px -5px rgb(0 28 30 / 0.1), 0 8px 10px -6px rgb(0 28 30 / 0.1);
+
+    --animate-openDropdownList:   open-downwards 0.2s ease-out 1 forwards;
+    --animate-goUpwards: point-upwards 1s ease-in-out infinite;
+
+    --breakpoint-screen-2xl: 1390px;
+    --breakpoint-screen-xl: 1290px;
+    --breakpoint-screen-lg: 1236px;
+    --breakpoint-screen-slg: 1170px;
+    --breakpoint-screen-lmd: 1068px;
+    --breakpoint-screen-md: 1024px;
+    --breakpoint-screen-smd: 960px;
+    --breakpoint-screen-s: 880px;
+    --breakpoint-screen-ss: 716px;
+    --breakpoint-screen-xs: 600px;
+    --breakpoint-screen-2xs: 520px;
+    --breakpoint-screen-3xs: 420px;
+    --breakpoint-screen-4xs: 390px;
+}
+
 html {
     scroll-behavior: smooth;
-    scrollbar-color: #001c1e #ebfce1;
+    scrollbar-color: var(--color-brand-dark) var(--color-brand-extraLight);
+}
+
+@keyframes open-downwards {
+    0% {
+        transform: translateY(-0.4rem);
+        opacity: 0%;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 100%;
+    }
+}
+
+@keyframes point-upwards {
+    0% {
+        transform: translateY(0rem);
+        opacity: 100%;
+    }
+    100% {
+        transform: translateY(-1rem);
+        opacity: 0%;
+    }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from "react";
-import type { ChangeEvent, Dispatch, SetStateAction, MutableRefObject, FormEvent } from "react";
+import type { ChangeEvent, Dispatch, SetStateAction, RefObject, SubmitEvent } from "react";
 
 import Button from '@/components/Button';
 import SmallRoundButton from "../SmallRoundButton";
@@ -11,8 +11,8 @@ interface CounterUIProp {
     setTerm: Dispatch<SetStateAction<number>>;
     isCounting: boolean;
     setIsCounting: Dispatch<SetStateAction<boolean>>;
-    totalSecondsDuration: MutableRefObject<number>;
-    isFinishedCounting: MutableRefObject<boolean>;
+    totalSecondsDurationRef: RefObject<number>;
+    isFinishedCountingRef: RefObject<boolean>;
 }
 
 export default function TimerUI({
@@ -20,8 +20,8 @@ export default function TimerUI({
     setTerm,
     isCounting,
     setIsCounting,
-    totalSecondsDuration,
-    isFinishedCounting,
+    totalSecondsDurationRef,
+    isFinishedCountingRef,
 }: CounterUIProp) {
     const [isInitializing, setIsInitializing] = useState(true);
 
@@ -51,14 +51,14 @@ export default function TimerUI({
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(parseInt(e.target.value) || 0);
-        isFinishedCounting.current = true;
+        isFinishedCountingRef.current = true;
     }
 
     const tick = () => {
         setTerm((currTerm) => {
             if (currTerm <= 0) {
                 handleStopClick();
-                isFinishedCounting.current = true;
+                isFinishedCountingRef.current = true;
                 return 0;
             }
 
@@ -73,8 +73,8 @@ export default function TimerUI({
 
     const handleStartClick = () => {
         setIsCounting(true);
-        if (isFinishedCounting.current === true) totalSecondsDuration.current = term;
-        isFinishedCounting.current = false;
+        if (isFinishedCountingRef.current === true) totalSecondsDurationRef.current = term;
+        isFinishedCountingRef.current = false;
         intervalAddress.current = setInterval(tick, 1000);
 
     };
@@ -88,12 +88,12 @@ export default function TimerUI({
     const handleResetClick = () => {
         setTerm(4);
         setIsCounting(false);
-        isFinishedCounting.current = true;
-        totalSecondsDuration.current = 4;
+        isFinishedCountingRef.current = true;
+        totalSecondsDurationRef.current = 4;
         intervalAddress.current = null;
     };
 
-    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleStartClick();
     }
@@ -114,22 +114,14 @@ export default function TimerUI({
                 onChange={handleTermChange}
                 type="number"
                 className="
-                    text-[1rem]
-                    w-[13em]
-                    text-brand-dark
-                    font-semibold
-                    pl-3  
-                    border-brand-regular
-                    border
-                    bg-[#fff]
+                    text-[1rem] font-semibold
+                    bg-[#fff] text-brand-dark
+                    w-[13em] pl-3  
+                    focus:outline-2 focus:outline-brand-lightMedium focus:outline-offset-1
                     disabled:bg-brand-light
-                    focus:outline-none
-                    focus:outline-brand-lightMedium
-                    focus:outline-offset-[-1px]
-                    focus:rounded-none
-                    screen-2xs:w-[11em]
-                    screen-3xs:w-[10em]
-                    screen-4xs:w-[7em]
+                    max-screen-2xs:w-[11em]
+                    max-screen-3xs:w-[10em]
+                    max-screen-4xs:w-[7em]
                 "
             />
             <fieldset className="flex gap-[1em]">
@@ -161,8 +153,8 @@ export default function TimerUI({
 }
 
 async function createAudioBuffer(
-    audioContextRef: MutableRefObject<AudioContext | null>,
-    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    audioContextRef: RefObject<AudioContext | null>,
+    audioBufferRef: RefObject<AudioBuffer | null>,
     path: string
 ) {
     if (!audioContextRef.current) return;
@@ -174,8 +166,8 @@ async function createAudioBuffer(
 }
 
 function playAudio(
-    audioBufferRef: MutableRefObject<AudioBuffer | null>,
-    audioContextRef: MutableRefObject<AudioContext | null>,
+    audioBufferRef: RefObject<AudioBuffer | null>,
+    audioContextRef: RefObject<AudioContext | null>,
     time: number,
 ) {
     if (!audioContextRef.current || !audioBufferRef.current) return;

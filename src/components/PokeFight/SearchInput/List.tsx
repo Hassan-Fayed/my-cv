@@ -6,25 +6,15 @@ import type { Dispatch, SetStateAction, MouseEvent } from "react";
 import Image from "next/image";
 import type { Pokemon } from "@/utils/fetchPokemon";
 
-
 interface ListPropsType {
     image: string;
     name: string;
     handleListClick: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
     setFoundPokemon: Dispatch<SetStateAction<Pokemon | null>>;
     className?: string;
-    position: 'left' | 'right';
 }
 
-
-export default function List({
-    image,
-    name,
-    handleListClick,
-    setFoundPokemon,
-    className = '',
-    position,
-}: ListPropsType) {
+export default function List({ image, name, handleListClick, setFoundPokemon, className }: ListPropsType) {
     const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -47,12 +37,18 @@ export default function List({
         text-[max(1.5em,1rem)]
         hover:cursor-pointer hover:bg-brand-regular
         p-[0.3em]
-        ${className}
+        ${className ? className : ''}
     `}>
-        <Image src={image} width={96} height={96} alt={`An Image of a ${name}`} className="
-            w-[max(30%,0.5rem)] h-auto
-            screen-xs:hidden
-        " />
+        <Image
+            src={image}
+            width={96}
+            height={96}
+            alt={`An Image of a ${name}`}
+            className="
+                w-[max(30%,0.5rem)] h-auto
+                max-screen-xs:hidden
+            "
+        />
         <p className="capitalize">{name}</p>
     </div>;
 }

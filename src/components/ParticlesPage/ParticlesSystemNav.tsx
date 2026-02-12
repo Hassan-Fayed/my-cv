@@ -1,37 +1,44 @@
 'use client';
 
-import type { ChangeEvent, MutableRefObject, FormEvent, RefObject } from 'react';
+import type { ChangeEvent, SubmitEvent, RefObject } from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { IoMdArrowDropleft } from "react-icons/io";
 
 import { useModalContext } from '@/context/modalContext';
-
-import { IoMdArrowDropleft } from "react-icons/io";
-import { Press_Start_2P } from 'next/font/google';
-
 import Particle from '@/utils/particlesSystem/particles';
 import { startEffect } from '@/utils/particlesSystem/helperFunctions';
 import IconLink from "@/components/IconLink";
 import Button from "@/components/Button";
 import pixelBall from '../../../public/pixelBall.png';
 import MuteButton from '../MuteButton';
+import { pressStart2pFont } from '@/utils/fonts';
 
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
 interface ParticlesSystemNavProps {
-    navRef: RefObject<HTMLDivElement>;
-    canvasRef: RefObject<HTMLCanvasElement>;
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>;
-    particlesArrRef: MutableRefObject<Particle[]>;
+    navRef: RefObject<HTMLDivElement | null>;
+    canvasRef: RefObject<HTMLCanvasElement | null>;
+    ctxRef: RefObject<CanvasRenderingContext2D | null>;
+    particlesArrRef: RefObject<Particle[]>;
 }
 
 export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particlesArrRef }: ParticlesSystemNavProps) {
+    const { setIsShowModal, setModalMsg } = useModalContext();
+
     const [isInitialized, setIsInitialized] = useState(false);
     const [term, setTerm] = useState('');
+
     const pxlBallImgElRef = useRef<HTMLImageElement | null>(null);
     const audioContextRef = useRef<AudioContext | null>(null);
     const collisionAudioBufferRef = useRef<AudioBuffer | null>(null);
 
-    const { isShowModal, setIsShowModal, modalMsg, setModalMsg } = useModalContext();
+    const getPxlBallImgEl = () => {
+        if (!pxlBallImgElRef.current) {
+            const imgElement = new Image();
+            imgElement.src = pixelBall.src;
+            pxlBallImgElRef.current = imgElement;
+        }
+        return pxlBallImgElRef.current;
+    };
 
     useEffect(() => {
         setModalMsg('Please, enter a diameter between 20px and 70px.');
@@ -47,15 +54,6 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
             setModalMsg('');
         };
     }, [setModalMsg, setIsShowModal]);
-
-    const getPxlBallImgEl = () => {
-        if (!pxlBallImgElRef.current) {
-            const imgElement = new Image();
-            imgElement.src = pixelBall.src;
-            pxlBallImgElRef.current = imgElement;
-        }
-        return pxlBallImgElRef.current;
-    };
 
     const getAudioContext = () => {
         if (!audioContextRef.current)
@@ -78,7 +76,7 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
         setTerm(e.target.value);
     };
 
-    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!canvasRef.current || !term) return;
 
@@ -102,31 +100,27 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
         }
     }
 
-    return <nav id="particles-nav" ref={navRef} className="
-        bg-brand-regular
-        h-[4.7rem] w-full
-        relative
-    ">
+    return <nav id="particles-nav" ref={navRef} className="bg-brand-regular h-[4.7rem] w-full relative">
         <h1 className={`
-            ${pressStart2p.className} text-[2rem] text-brand-extraLight
+            ${pressStart2pFont.className} text-[2rem] text-brand-extraLight
             w-full h-full
             flex justify-center items-center
-            screen-s:text-[1.618rem]
-            screen-ss:hidden
+            max-screen-s:text-[1.618rem]
+            max-screen-ss:hidden
         `}>
             <span
                 className="
                 relative 
-                screen-lg:right-[5.4rem]
-                screen-slg:right-[6.4rem]
+                max-screen-lg:right-[5.4rem]
+                max-screen-slg:right-[6.4rem]
             "
             >Particles</span>
             <span
                 className="
                     relative
-                    screen-lg:right-[5.4rem]
-                    screen-slg:right-[6.4rem]
-                    screen-md:hidden
+                    max-screen-lg:right-[5.4rem]
+                    max-screen-slg:right-[6.4rem]
+                    max-screen-md:hidden
                 "
             >&nbsp;System</span>
         </h1>
@@ -134,16 +128,16 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
             w-full h-full
             absolute top-[0] left-[0]
             px-[2.168rem]
-            screen-2xs:px-[1rem]
-            screen-4xs:px-[0.5rem]
+            max-screen-2xs:px-[1rem]
+            max-screen-4xs:px-[0.5rem]
         ">
             <div className="
                 max-w-projects-container-width h-full mx-auto
                 flex justify-between items-center
                 text-[1rem]
-                screen-4xs:text-[0.9rem] 
+                max-screen-4xs:text-[0.9rem] 
             ">
-                <div className="relative screen-4xs:gap-[0]">
+                <div className="relative max-screen-4xs:gap-[0]">
                     <IconLink
                         isLinkingOutside={false}
                         color="text-brand-extraLight"
@@ -164,7 +158,7 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
                     " />
                 </div>
                 <form onSubmit={handleFormSubmit}>
-                    <fieldset className="flex gap-[1.25em] screen-3xs:gap-[1em]">
+                    <fieldset className="flex gap-[1.25em] max-screen-3xs:gap-[1em]">
                         <input
                             disabled={!isInitialized}
                             max={70}
@@ -174,6 +168,7 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
                             type="number"
                             placeholder="Enter a new diameter"
                             className="
+                                bg-brand-light
                                 text-[1em]
                                 w-[13em]
                                 pl-[0.5rem]
@@ -181,7 +176,7 @@ export default function ParticlesSystemNav({ navRef, canvasRef, ctxRef, particle
                                 focus:outline-brand-lightMedium
                                 focus:outline-offset-[-1px]
                                 focus:rounded-none
-                                screen-3xs:w-[12.05em]
+                                max-screen-3xs:w-[12.05em]
                                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
                             "
                         />

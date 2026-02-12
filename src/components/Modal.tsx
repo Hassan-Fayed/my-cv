@@ -40,15 +40,16 @@ export default function Modal() {
 
     return <>
         {isShowModal && createPortal(
-            <div style={{ backgroundColor: 'rgba(55, 101, 91, 0.618)' }} className="
+            <div className="
+                bg-brand-transparent-gray
                 absolute z-20 top-[0] left-[0] 
                 w-full h-svh 
                 flex justify-center items-center
                 text-[1rem]
-                screen-slg:text-[0.95rem]
-                screen-md:text-[0.8rem]
-                screen-smd:text-[0.7rem]
-                screen-2xs:text-[0.5rem]
+                max-screen-slg:text-[0.95rem]
+                max-screen-md:text-[0.8rem]
+                max-screen-smd:text-[0.7rem]
+                max-screen-2xs:text-[0.5rem]
             ">
                 <button
                     onClick={handleCloseModalClick}

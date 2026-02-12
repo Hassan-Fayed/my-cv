@@ -18,13 +18,13 @@ function drawBinaryTree(
     geoSeqPos: number,
     pCoordinates: PCoordinates | null = null
 ) {
-    const ballImageLength = Math.max(canvas.width / 35, 20);
-    const y = ballImageLength * 2;
+    const ballImageLength = Math.max(canvas.width / 34, 20);
+    const y = ballImageLength * 1.5;
     const spaceBetNodesStartVal = ballImageLength;
     const rowHeight = ballImageLength * 1.5;
 
     ctx.font = `bold ${ballImageLength * 0.6}px Arial`;
-    ctx.lineWidth = ballImageLength * 0.07;
+    ctx.lineWidth = ballImageLength * 0.08;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 

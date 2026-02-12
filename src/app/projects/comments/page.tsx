@@ -20,7 +20,7 @@ export default async function CommentsPage() {
         <GeneralNav title="Comments" />
         <main className="
             min-h-general-container-height bg-brand-light 
-            px-[2.168rem] screen-4xs:px-4
+            px-[2.168rem] max-screen-4xs:px-4
         ">
             <div className="
                 max-w-[43rem] 

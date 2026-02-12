@@ -21,7 +21,7 @@ export default function CommentsShow({ comments }: CommentsShowProps) {
             relative
             p-[1rem] mb-[0.75rem]
             text-[1.3rem]
-            screen-4xs:text-[1rem]
+            max-screen-4xs:text-[1rem]
         ">
             <p className="font-bold mb-[0.5rem]">{comment.name}</p>
             <CommentContent comment={comment} />
@@ -34,7 +34,7 @@ export default function CommentsShow({ comments }: CommentsShowProps) {
             relative
             p-[1rem] mb-[0.75rem]
             text-[1.3rem]
-            screen-4xs:text-[1rem]
+            max-screen-4xs:text-[1rem]
         ">
             <p className="font-bold mb-[0.5rem]">Hassan Fayed</p>
             <p>{"Hello! I'm looking forward to reading your comments."}</p>

@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 interface IconLinkProps {
     isLinkingOutside: boolean
-    children: JSX.Element;
+    children: React.ReactNode;
     color: string;
     hoverColor: string;
     hoverBackgroundColor: string;

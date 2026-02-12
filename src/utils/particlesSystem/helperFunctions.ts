@@ -1,20 +1,18 @@
-import type { MutableRefObject, RefObject } from 'react';
+import type { RefObject } from 'react';
 import type Particle from './particles';
 
 let animationId: number | null = null;
 
 function initializeCanvas(
-    canvasRef: RefObject<HTMLCanvasElement>,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
-    navRef: RefObject<HTMLDivElement>
+    canvasRef: RefObject<HTMLCanvasElement | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>
 ) {
-    if (!canvasRef.current || !navRef.current) return;
+    if (!canvasRef.current) return;
 
     // get context only if you did not get one before:
-    if (!ctxRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
-        ctxRef.current = ctx
-    }
+    if (!ctxRef.current)
+        ctxRef.current = canvasRef.current.getContext('2d');
+
     if (!ctxRef.current) return;
 
     ctxRef.current.strokeStyle = '#f0184a';
@@ -113,8 +111,8 @@ function connectParticles(
 }
 
 function drawParticles(
-    canvasRef: RefObject<HTMLCanvasElement>,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+    canvasRef: RefObject<HTMLCanvasElement | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>,
     particlesArr: Particle[],
     pxlBallImgEl: HTMLImageElement
 ) {
@@ -140,7 +138,7 @@ function drawParticles(
         }
     }
 
-    for (let particle of particlesArr)
+    for (const particle of particlesArr)
         ctx.drawImage(pxlBallImgEl, particle.x, particle.y, particle.diameter, particle.diameter);
 }
 
@@ -149,15 +147,15 @@ function changeParticlesCoordinates(
     audioContext: AudioContext,
     collisionAudioBuffer: AudioBuffer
 ) {
-    for (let particle of particlesArr) {
+    for (const particle of particlesArr) {
         particle.updateY(collisionAudioBuffer, audioContext, 0);
         particle.updateX(collisionAudioBuffer, audioContext, 0);
     }
 }
 
 function animate(
-    canvasRef: RefObject<HTMLCanvasElement>,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+    canvasRef: RefObject<HTMLCanvasElement | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>,
     particlesArr: Particle[],
     pxlBallImgEl: HTMLImageElement,
     audioContext: AudioContext,
@@ -182,8 +180,8 @@ function animate(
 }
 
 function startEffect(
-    canvasRef: RefObject<HTMLCanvasElement>,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+    canvasRef: RefObject<HTMLCanvasElement | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>,
     particlesArr: Particle[],
     pxlBallImgEl: HTMLImageElement,
     audioContext: AudioContext,
@@ -197,9 +195,9 @@ function startEffect(
 
 function redistributeParticles(
     canvasDimensions: { width: number; height: number },
-    particlesArrRef: MutableRefObject<Particle[]>
+    particlesArrRef: RefObject<Particle[]>
 ) {
-    for (let particle of particlesArrRef.current) {
+    for (const particle of particlesArrRef.current) {
         particle.x = (canvasDimensions.width / 2) - particle.radius;
         particle.y = (canvasDimensions.height / 2) - particle.radius;
 

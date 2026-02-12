@@ -1,21 +1,20 @@
-import type { RefObject, MutableRefObject } from 'react';
+import type { RefObject } from 'react';
 
 export default function initializeCanvasAndCtx(
-    canvasRef: RefObject<HTMLCanvasElement>,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
-    navRef: RefObject<HTMLDivElement>
+    canvasRef: RefObject<HTMLCanvasElement | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>
 ) {
-    if (!canvasRef.current || !navRef.current) return;
+    if (!canvasRef.current) return;
 
-    const { height } = getComputedStyle(navRef.current);
-    canvasRef.current.width = window.innerWidth;
-    canvasRef.current.height = window.innerHeight - parseFloat(height);
 
-    ctxRef.current = canvasRef.current.getContext('2d');
+    // get context only if you did not get one before:
+    if (!ctxRef.current)
+        ctxRef.current = canvasRef.current.getContext('2d');
+
     if (!ctxRef.current) return;
 
     ctxRef.current.fillStyle = '#001c1e';
-    ctxRef.current.strokeStyle = '#001c1e';
+    ctxRef.current.strokeStyle = '#f0184a';
     ctxRef.current.textAlign = 'center';
     ctxRef.current.textBaseline = 'middle';
 }

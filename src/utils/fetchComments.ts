@@ -18,7 +18,7 @@ const fetchComments = cache((commentsLinkedList: CommentsLinkedList): Promise<Co
     return new Promise((resolve, reject) => {
         adminCommentsRef.on('value', (snapshot) => {
             const data = snapshot.val();
-            for (let key in data) {
+            for (const key in data) {
                 commentsLinkedList.unshift({
                     id: key,
                     name: data[key].name,

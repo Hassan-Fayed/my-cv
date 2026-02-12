@@ -1,9 +1,7 @@
 import { IoMdArrowDropleft } from "react-icons/io";
-import { Press_Start_2P } from 'next/font/google';
 
 import IconLink from "@/components/IconLink";
-
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface GeneralNavProps {
     title: string;
@@ -14,13 +12,13 @@ export default function GeneralNav({ title }: GeneralNavProps) {
         text-[1rem]
         h-[4.7rem] w-full 
         relative z-30
-        screen-xs:text-[0.9rem]
-        screen-2xs:text-[0.8rem]
-        screen-3xs:text-[0.7rem]
-        screen-4xs:text-[0.6rem]
+        max-screen-xs:text-[0.9rem]
+        max-screen-2xs:text-[0.8rem]
+        max-screen-3xs:text-[0.7rem]
+        max-screen-4xs:text-[0.6rem]
     ">
         <h1 className={`
-            ${pressStart2p.className}
+            ${pressStart2pFont.className}
             h-full
             bg-brand-regular
             text-brand-extraLight
@@ -34,15 +32,15 @@ export default function GeneralNav({ title }: GeneralNavProps) {
             absolute top-[0] left-[0]
             flex justify-center
             px-[2.168rem]
-            screen-4xs:px-4
+            max-screen-4xs:px-4
         ">
             <div className="
                 text-[1rem]
                 w-projects-container-width 
                 flex items-center
-                screen-2xs:text-[0.9rem]
-                screen-3xs:text-[0.8rem]
-                screen-4xs:text-[0.7rem]
+                max-screen-2xs:text-[0.9rem]
+                max-screen-3xs:text-[0.8rem]
+                max-screen-4xs:text-[0.7rem]
             ">
                 <IconLink
                     isLinkingOutside={false}

@@ -80,11 +80,7 @@ export default function AddComment({ className = '' }: AddCommentPropsType) {
             }
         }>
             <fieldset className="flex flex-col">
-                <label htmlFor="enter-comment-owner" className="
-                        peer
-                        self-start
-                        text-brand-medium 
-                ">
+                <label htmlFor="enter-comment-owner" className="transition-[font-weight] text-brand-medium">
                     Enter your name:
                 </label>
                 <input
@@ -95,20 +91,16 @@ export default function AddComment({ className = '' }: AddCommentPropsType) {
                     type="text"
                     maxLength={35}
                     className="
+                        bg-[#FFF] text-brand-dark
                         mt-[0.25rem]
                         text-[1.3rem] screen-4xs:text-[1rem]
                         pl-[0.5rem]
-                        border border-brand-regular
-                        focus:outline-none focus:outline-brand-lightMedium
-                        focus:outline-offset-[-1px] focus:rounded-none
+                        outline-none border border-brand-regular
+                        focus:border-brand-medium
                 " />
             </fieldset>
             <fieldset className="flex flex-col">
-                <label htmlFor="enter-comment-content" className="
-                    self-start
-                    text-brand-medium 
-                    flex flex-col
-                ">
+                <label htmlFor="enter-comment-content" className="transition-[font-weight] text-brand-medium">
                     Enter your comment:
                 </label>
                 <textarea
@@ -117,13 +109,13 @@ export default function AddComment({ className = '' }: AddCommentPropsType) {
                     required
                     name="content"
                     className="
-                            resize-none
-                            mt-[0.25rem] px-[0.5rem]
-                            text-[1.3rem] screen-4xs:text-[1rem]
-                            border border-brand-regular
-                            focus:outline-none focus:outline-brand-lightMedium
-                            focus:outline-offset-[-1px] focus:rounded-none
-                        "
+                        bg-[#FFF] text-brand-dark
+                        resize-none
+                        mt-[0.25rem] px-[0.5rem]
+                        text-[1.3rem] screen-4xs:text-[1rem]
+                        outline-none border border-brand-regular
+                        focus:border-brand-medium
+                    "
                 ></textarea>
             </fieldset>
             <div className="mt-[0.4rem] flex justify-between items-end gap-[1rem]">

@@ -1,43 +1,49 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import type { ChangeEvent, RefObject, MutableRefObject, FormEvent } from 'react';
+import type { ChangeEvent, RefObject, SubmitEvent } from 'react';
 import type { BSTType } from '@/utils/binarySearchTree';
 
 import { IoMdArrowDropleft } from "react-icons/io";
-import { Press_Start_2P } from 'next/font/google';
 
 import { useModalContext } from '@/context/modalContext';
 
 import IconLink from "@/components/IconLink";
 import Switch from "./Switch";
 import drawBinaryTree from '@/utils/avlTree/drawBinaryTree';
-
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface AVLTreeNavProps {
-    canvasRef: RefObject<HTMLCanvasElement>;
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>;
-    navRef: RefObject<HTMLDivElement>;
+    canvasRef: RefObject<HTMLCanvasElement | null>;
+    ctxRef: RefObject<CanvasRenderingContext2D | null>;
+    navRef: RefObject<HTMLDivElement | null>;
     getBST: () => BSTType;
-    ballImgElRef: MutableRefObject<HTMLImageElement | null>;
-    isImgLoaded: boolean;
+    getBallImgEl: () => HTMLImageElement;
 }
 
-export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgElRef, isImgLoaded }: AVLTreeNavProps) {
+export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, getBallImgEl }: AVLTreeNavProps) {
     const [isDelete, setIsDelete] = useState(false);
     const [term, setTerm] = useState('');
+    const [isImageInitialized, setIsImageInitialized] = useState(false);
 
     const { isShowModal, setIsShowModal, setModalMsg } = useModalContext();
+
+    useEffect(() => {
+        const imgEl = getBallImgEl();
+        const handler = () => setIsImageInitialized(true);
+        imgEl.addEventListener('load', handler);
+
+        return () => removeEventListener('load', handler);
+    }, [getBallImgEl]);
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!term || !canvasRef.current || !ctxRef.current || !ballImgElRef.current) {
+        if (!term || !canvasRef.current || !ctxRef.current) {
             setTerm('');
             return;
         }
@@ -64,7 +70,7 @@ export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgE
             bST.root,
             canvasRef.current,
             ctxRef.current,
-            ballImgElRef.current,
+            getBallImgEl(),
             canvasRef.current.width / 2,
             bST.maxDepth() - 1
         );
@@ -77,10 +83,10 @@ export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgE
         sticky top-[0] left-[0] z-10
     ">
         <h1 className={`
-            ${pressStart2p.className} text-[2rem] text-brand-extraLight
+            ${pressStart2pFont.className} text-[2rem] text-brand-extraLight
             w-full h-full
             flex justify-center items-center
-            screen-slg:hidden
+            max-screen-slg:hidden
         `}>
             AVL Tree
         </h1>
@@ -88,14 +94,14 @@ export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgE
             w-full h-full
             absolute top-[0] left-[0]
             px-[2.168rem]
-            screen-2xs:px-[1rem]
-            screen-4xs:px-[0.5rem]
+            max-screen-2xs:px-[1rem]
+            max-screen-4xs:px-[0.5rem]
         ">
             <div className="
                 max-w-projects-container-width h-full mx-auto
                 flex justify-between items-center
                 text-[1rem]
-                screen-4xs:text-[0.9rem] 
+                max-screen-4xs:text-[0.9rem] 
             ">
                 <IconLink
                     isLinkingOutside={false}
@@ -109,15 +115,15 @@ export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgE
                     <IoMdArrowDropleft className="relative right-[0.05em]" />
                 </IconLink>
                 <h1 className={`
-                    ${pressStart2p.className} text-[2rem] text-brand-extraLight hidden
-                    screen-slg:block
-                    screen-s:text-[1.618rem]
-                    screen-ss:hidden
+                    ${pressStart2pFont.className} text-[2rem] text-brand-extraLight hidden
+                    max-screen-slg:block
+                    max-screen-s:text-[1.618rem]
+                    max-screen-ss:hidden
                 `}>
                     AVL Tree
                 </h1>
                 <form onSubmit={handleSubmit}>
-                    <fieldset disabled={!isImgLoaded || isShowModal} className="flex gap-[1.25em]" >
+                    <fieldset disabled={isShowModal || !isImageInitialized} className="flex gap-[1.25em] max-screen-3xs:gap-[0.9em]" >
                         <input
                             max={99}
                             min={-9}
@@ -126,18 +132,13 @@ export default function AVLTreeNav({ canvasRef, ctxRef, navRef, getBST, ballImgE
                             type="number"
                             placeholder={isDelete ? 'Delete a number' : 'Add a number'}
                             className="
-                                text-[1em]
-                                w-[11.308em]
-                                pl-[0.5rem]
-                                focus:outline-none 
-                                focus:outline-brand-lightMedium
-                                focus:outline-offset-[-1px]
-                                focus:rounded-none
-                                screen-3xs:w-[9.5em]
+                                w-[11.308em] pl-[0.5rem] outline-none
+                                text-[1em] text-brand-dark bg-brand-light 
+                                max-screen-3xs:w-[9.5em]
                                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
                             "
                         />
-                        <Switch value={isDelete} setValue={setIsDelete} className="text-[1em]" />
+                        <Switch value={isDelete} setValue={setIsDelete} className="text-[1em] shrink-0" />
                     </fieldset>
                 </form>
             </div>

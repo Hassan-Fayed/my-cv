@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, useRef, useEffect } from "react";
-import type { ChangeEvent, FormEvent } from "react";
+import { useState, useRef } from "react";
+import type { ChangeEvent, SubmitEvent } from "react";
 
 import TextInput from "@/components/TextInput/TextInput";
 import List from "./List";
-import debounce from '@/utils/debounce';
-import fetchPokemon from '@/utils/fetchPokemon';
+import { getDebouncedFetchPokemon, formatFetchPokeErrMessage } from '@/utils/fetchPokemon';
 import { usePokemonContext } from "@/context/pokemonContext";
 import type { Pokemon } from "@/utils/fetchPokemon";
 
@@ -17,40 +16,40 @@ interface SearchInputProps {
 }
 
 export default function SearchInput({
-    className = '',
+    className,
     inputUniqueId,
     position,
 }: SearchInputProps) {
     const [term, setTerm] = useState('');
     const [foundPokemon, setFoundPokemon] = useState<Pokemon | null>(null);
-    const [message, setMessage] = useState<React.ReactNode>(null);
+    const [errMessage, setErrMessage] = useState('');
 
     const { leftPokemon, setLeftPokemon, rightPokemon, setRightPokemon } = usePokemonContext();
     const { pokemon, setPokemon } = position === 'left' ?
         { pokemon: leftPokemon, setPokemon: setLeftPokemon } :
         { pokemon: rightPokemon, setPokemon: setRightPokemon };
 
-    const debounceTimeoutId = useRef<NodeJS.Timeout | null>(null);
-
-    useEffect(() => {
-        setMessage(null);
-
-        if (term.length > 0)
-            debounce(fetchPokemon.bind(null, term, setFoundPokemon, setMessage), debounceTimeoutId)();
-
-
-        if (pokemon && pokemon.currHp <= 0)
-            setPokemon(null);
-
-    }, [term, pokemon, setPokemon]);
+    const debounceTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
     const handleTermChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTerm(e.target.value);
         setFoundPokemon(null);
-        setMessage('');
+        setErrMessage('');
+
+        setTerm(e.target.value);
+
+        const debouncedFetchPokemon = getDebouncedFetchPokemon(e.target.value, debounceTimeoutIdRef);
+        debouncedFetchPokemon().then(result => {
+            if (result.isSuccess) {
+                setErrMessage('');
+                setFoundPokemon(result.pokemon);
+            } else {
+                setErrMessage(result.errMessage);
+            }
+        });
+
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (foundPokemon) {
             setPokemon(foundPokemon);
@@ -67,8 +66,8 @@ export default function SearchInput({
 
     return <div className={
         `relative 
-        ${className}
         flex flex-col ${position === 'right' ? 'items-end' : ''} 
+        ${className ? className : ''}
     `}>
         <TextInput
             value={term}
@@ -79,12 +78,12 @@ export default function SearchInput({
             parentFormClassName="z-10"
             maxLength={16}
             className={`
-                ${term && message ? 'focus:!outline-brand-accent !border-brand-accent' : ''}
+                ${term && errMessage ? 'focus:!outline-brand-accent !border-brand-accent' : ''}
             `}
             inputFieldWidth="w-full"
             parentFontSize="text-[0.9em]"
         />
-        {!!term && !!message &&
+        {!!term && !!errMessage &&
             <p className={`
                 absolute ${position === 'left' ? 'left-[0]' : 'right-[0]'} top-[100%]
                 text-brand-accent bg-brand-light
@@ -92,7 +91,7 @@ export default function SearchInput({
                 p-[0.375em] 
                 text-[max(1em,0.75rem)]
             `}>
-                {message}
+                {formatFetchPokeErrMessage(errMessage)}
             </p>
         }
         {!!foundPokemon && <List
@@ -100,11 +99,10 @@ export default function SearchInput({
             name={foundPokemon.name}
             handleListClick={handleListClick}
             setFoundPokemon={setFoundPokemon}
-            position={position}
             className="
                 z-0 w-full absolute top-[2.6em] left-[0]
-                screen-s:top-[2.7em] 
-                screen-xs:top-[2.9em]
+                max-screen-s:top-[2.7em] 
+                max-screen-xs:top-[2.9em]
             "
         />}
     </div>;

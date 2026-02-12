@@ -79,7 +79,6 @@ class Queue implements QueueType {
             this.#traversalArr = [];
             let temp: QueueNodeType | null = this.#head;
             while (temp !== null) {
-                temp.data
                 this.#traversalArr.push(temp.data);
                 temp = temp.next;
             }

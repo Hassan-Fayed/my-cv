@@ -1,31 +1,30 @@
 'use client';
 
 import { useRef, useEffect } from "react";
-import type { RefObject, MutableRefObject } from "react";
+import type { RefObject } from "react";
 
 interface CounterCanvasShowPropsType {
-    totalSecondsDuration: MutableRefObject<number>;
+    totalSecondsDurationRef: RefObject<number>;
     term: number;
 }
 
 export default function TimerCanvasShow({
-    totalSecondsDuration,
+    totalSecondsDurationRef,
     term: currentSecond,
 }: CounterCanvasShowPropsType) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const currentAngleFactor = 2 * currentSecond / totalSecondsDuration.current;
-
     useEffect(() => {
+        const currentAngleFactor = 2 * currentSecond / totalSecondsDurationRef.current;
         drawCounter(canvasRef, currentAngleFactor);
-    }, [currentAngleFactor]);
+    }, [currentSecond, totalSecondsDurationRef]);
 
     return <canvas className="w-[31.25em] h-[31.25em]" ref={canvasRef} width="500" height="500">
         Timer
     </canvas>;
 }
 
-function drawCounter(canvasRef: RefObject<HTMLCanvasElement>, arcAngleFactor: number) {
+function drawCounter(canvasRef: RefObject<HTMLCanvasElement | null>, arcAngleFactor: number) {
     const ctx = canvasRef.current?.getContext('2d');
     if (!ctx) return;
 

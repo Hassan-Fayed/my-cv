@@ -2,9 +2,7 @@ import Link from "next/link";
 
 import paths from "@/utils/paths";
 
-import { Press_Start_2P } from "next/font/google"
-
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 export default function NotFound() {
     return <div className="
@@ -13,7 +11,7 @@ export default function NotFound() {
     ">
         <div className="flex flex-col items-center">
             <h1 className={`
-                ${pressStart2p.className} 
+                ${pressStart2pFont.className} 
                 text-[5rem] 
                 leading-none text-brand-medium
                 relative left-[0.04em]

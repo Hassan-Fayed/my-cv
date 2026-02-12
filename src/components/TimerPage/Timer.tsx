@@ -12,8 +12,8 @@ interface TimerPropsType {
 export default function Timer({ className }: TimerPropsType) {
     const [term, setTerm] = useState(4);
     const [isCounting, setIsCounting] = useState(false);
-    const totalSecondsDuration = useRef(4);
-    const isFinishedCounting = useRef(true);
+    const totalSecondsDurationRef = useRef(4);
+    const isFinishedCountingRef = useRef(true);
 
     return <div className={`relative ${className}`}>
         <TimerUI
@@ -21,11 +21,11 @@ export default function Timer({ className }: TimerPropsType) {
             setTerm={setTerm}
             isCounting={isCounting}
             setIsCounting={setIsCounting}
-            totalSecondsDuration={totalSecondsDuration}
-            isFinishedCounting={isFinishedCounting}
+            totalSecondsDurationRef={totalSecondsDurationRef}
+            isFinishedCountingRef={isFinishedCountingRef}
         />
         <TimerCanvasShow
-            totalSecondsDuration={totalSecondsDuration}
+            totalSecondsDurationRef={totalSecondsDurationRef}
             term={term}
         />
     </div>;

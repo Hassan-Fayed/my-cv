@@ -12,8 +12,8 @@ export default function Home() {
       isOpaqueBG={false}
       paddingY="
         pt-[9.688em] pb-[21em]
-        screen-s:py-32
-        screen-3xs:py-24
+        max-screen-s:py-32
+        max-screen-3xs:py-24
       "
       title={<>
         Educa
@@ -35,10 +35,10 @@ export default function Home() {
     />
     <div className="
       relative text-[1rem]
-      screen-xl:text-[0.9rem]
-      screen-slg:text-[0.8rem]
-      screen-md:text-[0.7rem]
-      screen-smd:text-[0.62rem]
+      max-screen-xl:text-[0.9rem]
+      max-screen-slg:text-[0.8rem]
+      max-screen-md:text-[0.7rem]
+      max-screen-smd:text-[0.62rem]
     ">
       <Image
         width="1000"
@@ -46,7 +46,7 @@ export default function Home() {
         className="
           w-[31.25em] h-auto
           absolute top-[-12em] right-[8em]
-          screen-s:hidden
+          max-screen-s:hidden
         "
         alt=""
         src="/pizza.png"
@@ -55,8 +55,8 @@ export default function Home() {
         isOpaqueBG
         paddingY="
           pt-[9.688em] pb-[39em]
-          screen-s:py-32
-          screen-3xs:py-24
+          max-screen-s:py-32
+          max-screen-3xs:py-24
         "
         title={<>Exper<span className="relative right-[0.14em]">ience</span></>}
         content={[
@@ -73,7 +73,7 @@ export default function Home() {
         className="
           w-auto h-[31.25em]
           absolute bottom-[4.1em] left-11
-          screen-s:hidden
+          max-screen-s:hidden
         "
         alt=""
         src="/soda.png"

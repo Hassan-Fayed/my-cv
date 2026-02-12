@@ -1,21 +1,19 @@
-import { Press_Start_2P } from "next/font/google";
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface HPBarPropsType {
     total: number;
     current: number;
 }
 
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
-
 export default function HPBarPropsType({ total, current }: HPBarPropsType) {
     const percentage = current / total * 100;
 
-    let remainingLifeWidth: string = getLifeBarWidth(percentage);
+    const remainingLifeWidth: string = getLifeBarWidth(percentage);
 
     return <div className={`
+        ${pressStart2pFont.className}
         text-[max(0.75em,0.55rem)]
         w-full 
-        ${pressStart2p.className}
         flex items-center
     `}>
         <span>HP:</span>
@@ -27,8 +25,8 @@ export default function HPBarPropsType({ total, current }: HPBarPropsType) {
             grow
         ">
             <div className={`
-                h-full
                 ${remainingLifeWidth}
+                h-full 
                 bg-brand-regular
                 transition-all
             `}></div>

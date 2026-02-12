@@ -20,7 +20,7 @@ export default function FormMessage({
     const containerClassName = classNames(
         'text-brand-extraLight text-[1.3rem] p-[1.75rem] font-bold',
         'flex justify-center items-center',
-        'screen-4xs:text-[1rem]',
+        'max-screen-4xs:text-[1rem]',
         'relative',
         {
             'bg-brand-darkRegular': success,

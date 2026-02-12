@@ -1,14 +1,12 @@
 'use client';
 
-import type { MutableRefObject } from "react";
+import type { RefObject } from "react";
 import { useRef, useEffect, useState } from "react";
 
 import Button from "../Button";
 import HPBar from "./HPBar";
 import { usePokemonContext } from "@/context/pokemonContext";
-
-import { Press_Start_2P } from "next/font/google";
-const pressStart2p = Press_Start_2P({ weight: "400", subsets: ["latin"] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface PokeControlsPropsType {
     position: 'left' | 'right';
@@ -45,20 +43,26 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
     const handleAttackClick = () => {
         playAudio(attackAudioBufferRef, audioContextRef, 0);
         setOpponentPokemon((currOpponentPoke) => {
-            if (currOpponentPoke)
+            if (currOpponentPoke) {
+                const currHp = currOpponentPoke.currHp - currOpponentPoke.attack;
+
+                if (currHp <= 0) return null;
+
                 return {
                     ...currOpponentPoke,
-                    currHp: currOpponentPoke.currHp - currOpponentPoke.attack,
+                    currHp,
                 };
-            else
+            } else {
                 return null;
+            }
+
         });
     };
 
     return <>
         {pokemon &&
             <div className="flex flex-col gap-[0.4rem]">
-                <h2 className={`${pressStart2p.className} capitalize text-[max(1.5em,0.75rem)] break-all`}>
+                <h2 className={`${pressStart2pFont.className} capitalize text-[max(1.5em,0.75rem)] break-all`}>
                     {pokemon.name}
                 </h2>
                 <HPBar total={pokemon.hp} current={pokemon.currHp} />
@@ -77,8 +81,8 @@ export default function PokeControls({ position }: PokeControlsPropsType) {
 }
 
 async function createAudioBuffer(
-    audioContextRef: MutableRefObject<AudioContext | null>,
-    audioBufferRef: MutableRefObject<AudioBuffer | null>,
+    audioContextRef: RefObject<AudioContext | null>,
+    audioBufferRef: RefObject<AudioBuffer | null>,
     path: string
 ) {
     if (!audioContextRef.current) return;
@@ -90,8 +94,8 @@ async function createAudioBuffer(
 }
 
 function playAudio(
-    audioBufferRef: MutableRefObject<AudioBuffer | null>,
-    audioContextRef: MutableRefObject<AudioContext | null>,
+    audioBufferRef: RefObject<AudioBuffer | null>,
+    audioContextRef: RefObject<AudioContext | null>,
     time: number
 ) {
     if (!audioContextRef.current || !audioBufferRef.current) return;
@@ -100,7 +104,7 @@ function playAudio(
     bufferSource.buffer = audioBufferRef.current;
 
     const volume = audioContextRef.current.createGain();
-    volume.gain.value = 0.5;
+    volume.gain.value = 1;
 
     bufferSource.connect(volume);
     volume.connect(audioContextRef.current.destination);

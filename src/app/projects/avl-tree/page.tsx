@@ -1,54 +1,29 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useRef, useCallback } from 'react';
 
 import AVLTreeNav from '@/components/AVLTreePage/AVLTreeNav/AVLTreeNav';
 import AVLTreeDisplay from '@/components/AVLTreePage/AVLTreeDisplay';
 import Modal from '@/components/Modal';
 
-import { useModalContext } from '@/context/modalContext';
-
 import { BST } from '@/utils/binarySearchTree';
 import pixelBall from '../../../../public/pixelBall.png';
 
 export default function AvlTreePage() {
-    const { setIsShowModal, setModalMsg } = useModalContext();
-    const [isImgLoaded, setIsImgLoaded] = useState(false);
-
     const bSTRef = useRef<BST | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const navRef = useRef<HTMLDivElement>(null);
     const ballImgElRef = useRef<HTMLImageElement | null>(null);
 
-    useEffect(() => {
-        const imgEl = new Image();
-        imgEl.src = pixelBall.src;
-        ballImgElRef.current = imgEl;
-
-        imgEl.addEventListener('load', () => setIsImgLoaded(true), { once: true });
-    }, []);
-
-    useEffect(() => {
-        function checkScreenAspectRatio() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const ratio = width / height;
-            if (ratio < 1) {
-                setModalMsg('Please, make the window wider or rotate your screen.');
-                setIsShowModal(true);
-            } else {
-                setIsShowModal(false);
-                setModalMsg('');
-            }
+    const getBallImgEl = useCallback(() => {
+        if (ballImgElRef.current === null) {
+            const imgEl = new Image();
+            imgEl.src = pixelBall.src;
+            ballImgElRef.current = imgEl;
         }
-        checkScreenAspectRatio();
-
-        window.addEventListener('resize', checkScreenAspectRatio);
-
-        return () => window.removeEventListener('resize', checkScreenAspectRatio);
-    }, [setIsShowModal, setModalMsg]);
-
+        return ballImgElRef.current;
+    }, []);
 
     const getBST = useCallback(() => {
         if (!bSTRef.current) {
@@ -64,15 +39,14 @@ export default function AvlTreePage() {
             ctxRef={ctxRef}
             navRef={navRef}
             getBST={getBST}
-            ballImgElRef={ballImgElRef}
-            isImgLoaded={isImgLoaded}
+            getBallImgEl={getBallImgEl}
         />
         <AVLTreeDisplay
             getBST={getBST}
             canvasRef={canvasRef}
             ctxRef={ctxRef}
             navRef={navRef}
-            ballImgElRef={ballImgElRef}
+            getBallImgEl={getBallImgEl}
         />
         <Modal />
     </div>;

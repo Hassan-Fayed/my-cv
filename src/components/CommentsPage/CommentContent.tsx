@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useFormState } from 'react-dom';
 import { IoCloseSharp } from "react-icons/io5";
 import { IoPencilSharp } from "react-icons/io5";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
@@ -119,14 +118,13 @@ export default function CommentContent({ comment }: CommentContentProps) {
                     defaultValue={comment.content}
                     rows={2}
                     className="
+                        bg-[#FFF] text-brand-dark
                         resize-none px-[0.5rem] w-full 
                         focus:outline-none focus:outline-brand-lightMedium
                         focus:outline-offset-[-1px] focus:rounded-none
                     ">
                 </textarea>
-                {editCommentFormState.message && <p className="
-                    text-[1rem] font-bold text-brand-extraLight bg-brand-accent p-[0.5rem]
-                ">
+                {editCommentFormState.message && <p className="text-[1rem] font-bold text-brand-extraLight bg-brand-accent p-[0.5rem]">
                     {editCommentFormState.message}
                 </p>}
             </form>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import type { ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, SubmitEvent } from "react";
 
 import Button from "../Button";
 
@@ -25,7 +25,7 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
         setIsEdit(true);
     }
 
-    const handleEditFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleEditFormSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         handleEditToDo(id, term);
@@ -50,7 +50,7 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
                         before:relative
                         before:top-[1.2rem]
                         before:shrink-0
-                        screen-xs:before:top-[0.85rem]
+                        max-screen-xs:before:top-[0.85rem]
                     `}>
                         {task}
                     </span>
@@ -72,7 +72,7 @@ export default function TaskShow({ id, task, onDeleteClick, onEditToDo: handleEd
                     before:top-[1.3rem]
                     before:shrink-0
                     flex gap-3
-                    screen-xs:before:top-[0.95rem]
+                    max-screen-xs:before:top-[0.95rem]
                 ">
                     <input required autoFocus onChange={handleTermChange} value={term} type="text" className="
                         text-[1.5em]

@@ -9,8 +9,8 @@ const DynamicFullPageCanvas = dynamic(() => import('@/components/ParticlesPage/F
 import Modal from '@/components/Modal';
 
 export default function ParticlesPage() {
-    const navRef = useRef<HTMLDivElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const navRef = useRef<HTMLDivElement | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const particlesArrRef = useRef<Particle[]>([]);
 

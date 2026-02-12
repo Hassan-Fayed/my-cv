@@ -1,6 +1,8 @@
-import { Press_Start_2P } from "next/font/google";
+import type { JSX } from "react";
 
 import classNames from "classnames";
+
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface Content {
     subTitle: string;
@@ -14,8 +16,6 @@ interface SectionProps {
     content: Content[];
     paddingY: string;
 }
-
-const pressStart2p = Press_Start_2P({ weight: '400', subsets: ['latin'] });
 
 export default function Section({ title, content, isOpaqueBG, paddingY }: SectionProps) {
     const h4ClassName = classNames(
@@ -36,12 +36,12 @@ export default function Section({ title, content, isOpaqueBG, paddingY }: Sectio
 
     const sectionClassName = classNames(
         'text-[1rem] text-brand-extraDark px-11',
-        'screen-2xs:px-6',
-        'screen-slg:text-[0.95rem]',
-        'screen-md:text-[0.8rem]',
-        'screen-smd:text-[0.7rem]',
-        'screen-2xs:text-[0.5rem]',
-        'screen-3xs:text-[0.45rem]',
+        'max-screen-2xs:px-6',
+        'max-screen-slg:text-[0.95rem]',
+        'max-screen-md:text-[0.8rem]',
+        'max-screen-smd:text-[0.7rem]',
+        'max-screen-2xs:text-[0.5rem]',
+        'max-screen-3xs:text-[0.45rem]',
         {
             'text-brand-dark bg-brand-light': !isOpaqueBG,
             'text-brand-extraDark bg-brand-darkLight': isOpaqueBG,
@@ -67,7 +67,7 @@ export default function Section({ title, content, isOpaqueBG, paddingY }: Sectio
             relative
         `}>
             <h2 id="education-title" className={`
-                    ${pressStart2p.className}
+                    ${pressStart2pFont.className}
                     uppercase
                     text-[3.6em]
             `}>

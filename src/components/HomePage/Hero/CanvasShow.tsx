@@ -1,13 +1,12 @@
 'use client';
 
-import type { MutableRefObject } from 'react';
+import type { RefObject } from 'react';
 import type { StaticImageData } from 'next/image';
 
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 
-import { Press_Start_2P } from 'next/font/google';
-const pressStart2p = Press_Start_2P({ weight: '400', subsets: ['latin'] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 interface CanvasShowProps {
     getCurrScrollInfo: () => { scrollPercentage: number; pixelLength: number } | null;
@@ -65,7 +64,7 @@ export default function CanvasShow({ tenValuesImage, getCurrScrollInfo }: Canvas
 
 function drawASCIIImage(
     canvas: HTMLCanvasElement,
-    ctxRef: MutableRefObject<CanvasRenderingContext2D | null>,
+    ctxRef: RefObject<CanvasRenderingContext2D | null>,
     img: HTMLImageElement,
     pixelLength: number,
     scrollPercentage: number
@@ -118,8 +117,8 @@ function drawASCIIImage(
     }
 
     ctxRef.current.save();
-    ctxRef.current.font = `27px ${pressStart2p.style.fontFamily}`;
-    ctxRef.current.fillStyle = '#8ec571';
+    ctxRef.current.font = `27px ${pressStart2pFont.style.fontFamily}`;
+    ctxRef.current.fillStyle = '#88c070';
     ctxRef.current.textBaseline = 'alphabetic';
     ctxRef.current.fillText(`${scrollPercentage}%`, canvas.width - 231, canvas.height - 37);
     ctxRef.current.restore();

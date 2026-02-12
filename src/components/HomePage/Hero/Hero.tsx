@@ -4,7 +4,6 @@ import './hero.css';
 
 import { useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { Press_Start_2P } from 'next/font/google';
 
 import { IoMdArrowDropright } from "react-icons/io";
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -13,8 +12,7 @@ import CanvasShow from './CanvasShow';
 import tenValuesImage from '@/assets/ten-values-image.png';
 import paths from '@/utils/paths';
 import HomeNavBar from '../HomeNav/HomeNavBar';
-
-const pressStart2p = Press_Start_2P({ weight: '400', subsets: ['latin'] });
+import { pressStart2pFont } from '@/utils/fonts';
 
 export default function Hero() {
     const heroElementRef = useRef<HTMLDivElement>(null);
@@ -31,32 +29,29 @@ export default function Hero() {
         return { scrollPercentage, pixelLength };
     }, []);
 
-    return <main className="h-[calc(200svh-3.7rem)] bg-brand-regular overflow-x-clip">
+    return <main className="h-[200svh] bg-brand-regular overflow-x-clip max-screen-s:h-[100svh]">
         <HomeNavBar className="sticky top-[0] left-[0] z-[10]" />
         <div ref={heroElementRef} className="
-            sticky top-[3.7rem] left-[0]
-            px-11 screen-2xs:px-6 
+            h-[calc(100svh-3.7rem)] sticky top-[3.7rem]
+            pl-11 max-screen-2xs:pl-6 
+            flex items-end
+            max-screen-s:items-center
         ">
-            <div className="
-                h-[calc(100svh-3.7rem)] max-w-container-width mx-auto 
-                flex items-end 
-            ">
+            <div className="max-w-container-width mx-auto flex">
                 {/* left column */}
                 <div className="
-                    w-1/2
-                    text-[1rem]
-                    flex flex-col items-start
-                    relative bottom-[10.25rem] z-10
-                    screen-slg:text-[0.95rem] screen-slg:bottom-[7.35rem]
-                    screen-md:text-[0.8rem] screen-md:bottom-[6.7rem]
-                    screen-smd:text-[0.7rem] screen-smd:bottom-[8rem]
-                    screen-s:text-[1rem] screen-s:bottom-[0] screen-s:mx-auto 
-                    screen-s:w-auto screen-s:self-center
-                    screen-xs:text-[0.7rem]
-                    screen-2xs:text-[0.54rem]
+                    z-1
+                    self-center
+                    w-1/2 text-[1rem]
+                    flex flex-col items-start 
+                    max-screen-md:text-[0.95rem] 
+                    max-screen-smd:text-[0.85rem]
+                    max-screen-s:text-[1rem] max-screen-s:w-auto
+                    max-screen-xs:text-[0.7rem]
+                    max-screen-2xs:text-[0.54rem]
                 ">
                     <h1 className={`
-                        ${pressStart2p.className}
+                        ${pressStart2pFont.className}
                         uppercase 
                         text-[4.5em]
                         text-brand-dark 
@@ -81,15 +76,15 @@ export default function Hero() {
                             absolute
                             left-[-1.1em]
                             top-[0.175em]
-                            screen-xl:hidden
-                            screen-s:inline-block
-                            screen-xs:top-[0.131em] screen-xs:left-[-1.06em]
-                            screen-2xs:top-[-0.02em] screen-2xs:left-[-1em]
-                            screen-3xs:hidden
+                            max-screen-xl:hidden
+                            max-screen-s:inline-block
+                            max-screen-xs:top-[0.131em] max-screen-xs:left-[-1.06em]
+                            max-screen-2xs:top-[-0.02em] max-screen-2xs:left-[-1em]
+                            max-screen-3xs:hidden
                         "/>
                         <Link href={paths.contactInfo()}
                             className={`
-                                ${pressStart2p.className}
+                                ${pressStart2pFont.className}
                                 hover:underline uppercase 
                                 text-[2.7em] text-brand-extraLight text-nowrap 
                                 inline-block overflow-x-hidden w-[9.88em]
@@ -101,11 +96,11 @@ export default function Hero() {
                             text-[max(2.7em,2rem)]
                             text-brand-extraLight
                             absolute right-[-1.1em] top-[0.175em]
-                            screen-xl:hidden
-                            screen-s:inline-block
-                            screen-xs:top-[0.131em] screen-xs:right-[-1.06em]
-                            screen-2xs:top-[-0.02em] screen-2xs:right-[-1em]
-                            screen-3xs:hidden
+                            max-screen-xl:hidden
+                            max-screen-s:inline-block
+                            max-screen-xs:top-[0.131em] max-screen-xs:right-[-1.06em]
+                            max-screen-2xs:top-[-0.02em] max-screen-2xs:right-[-1em]
+                            max-screen-3xs:hidden
                         "/>
                     </div>
                 </div>
@@ -114,15 +109,17 @@ export default function Hero() {
                     w-1/2
                     relative z-0
                     flex justify-center
-                    relative 
-                    screen-s:hidden
+                    max-screen-s:hidden
                 ">
                     <div className="
                         text-[1rem]
-                        relative 
-                        screen-2xl:right-[3rem]
-                        screen-slg:text-[0.9rem]
-                        screen-md:text-[0.8rem]
+                        relative
+                        max-screen-2xl:right-[3rem]
+                        max-screen-lg:right-[6rem]
+                        max-screen-slg:right-[7rem] max-screen-slg:text-[0.93rem]
+                        max-screen-lmd:right-[10rem]
+                        max-screen-md:right-[12rem] max-screen-md:text-[0.8rem]
+                        max-screen-smd:right-[14rem]
                     ">
                         <CanvasShow tenValuesImage={tenValuesImage} getCurrScrollInfo={getCurrScrollInfo} />
                     </div>
